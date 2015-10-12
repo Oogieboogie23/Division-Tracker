@@ -34,12 +34,19 @@
 
 								<?php $flaggedCopy = "[SIZE=2]Members flagged for removal ({$flaggedCount})[/SIZE][hr][/hr][table=\"width: 500\"]"; ?>
 								<?php $flagged_ids = array(); ?>
+								<?php $alias = array(); ?>
+								<?php $aliasName = ""; ?>
 
 								<?php foreach ($flagged as $player) : ?>
 
 									<?php $flagged_ids[] = $player->member_id; ?>
 
-									<?php $flaggedCopy .= "[tr][td][COLOR=\"#FF0000\"]{$player->forum_name}[/color][/td][td][url=" . CLANAOD . "{$player->member_id}]Forum Account[/url][/td][td][url=http://aodwebhost.site.nfoservers.com/tracker/member/{$player->member_id}]Tracker Profile[/url][/td][/tr]"; ?>
+									<?php $alias = MemberHandle::findByMemberId($player->id); ?>
+									<?php foreach($alias as $name): ?>
+									<?php $aliasName = $name->handle_value; ?>
+									<?php endforeach; ?>
+
+									<?php $flaggedCopy .= "[tr][td][COLOR=\"#FF0000\"]{$player->forum_name}[/color][/td][td][url=" . CLANAOD . "{$player->member_id}]Forum Account[/url][/td][td][url=http://aodwebhost.site.nfoservers.com/tracker/member/{$player->member_id}]Tracker Profile[/url][/td][td][url=" . BATTLELOG . "{$aliasName}]Battlelog[/url][/td][/tr]"; ?>
 									
 
 									<li class='list-group-item clearfix' data-user-id='<?php echo $player->member_id ?>' data-player-id='<?php echo $player->member_id ?>'>
