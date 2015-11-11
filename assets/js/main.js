@@ -10,7 +10,7 @@ $(function() {
         if (windows > 1) {
             var i = 0;
             if (confirm("Note about forum PM limitation")) {
-                // open dialog and generate PM buttons to handle rows of "20's" 
+                // open dialog and generate PM buttons to handle rows of "20's"
             }
         }
 
@@ -20,6 +20,12 @@ $(function() {
 
         e.preventDefault();
         var url = "do/issue-submit";
+
+        if ($("#submit-issue #title").val() ==='') {
+            $("#submit-issue #title").parent().addClass("has-error");
+            $(".modal-body").prepend($(".alert-box").html("<div class='alert alert-danger'><i class='fa fa-times'></i> You must provide a title.</div>"));
+            return false;
+        }
 
         $.ajax({
             type: "POST",
@@ -31,7 +37,7 @@ $(function() {
                     $('.modal').modal('hide');
                     $(".alert-box").html("<div class='alert alert-success'><i class='fa fa-check'></i> " + data.message + "</div>").effect('highlight').delay(3000).fadeOut();
                 } else {
-                    $(".alert-box").html("<div class='alert alert-danger'><i class='fa fa-times'></i> " + data.message + "</div>").effect('highlight').delay(3000).fadeOut();
+                    $(".modal-body").prepend($(".alert-box").html("<div class='alert alert-danger'><i class='fa fa-times'></i> " + data.message + "</div>"));
                 }
             }
         });
@@ -233,7 +239,7 @@ $(function() {
                 showCancelButton: true,
                 confirmButtonColor: '#ff4136',
                 confirmButtonText: 'Yes, remove',
-                closeOnConfirm: false
+                closeOnConfirm: true
             },
 
             function() {
@@ -247,6 +253,7 @@ $(function() {
                 });
 
                 windowOpener($this.attr("href") + member, "AOD Squad Tracking", "width=900,height=600,scrollbars=yes");
+                window.location.reload();
             });
     });
 

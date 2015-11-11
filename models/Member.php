@@ -49,7 +49,7 @@ class Member extends Application {
 
 	public static function search($name) {
 		$conditions = array('forum_name %' => "%{$name}%");
-		$params = Flight::aod()->from('member')
+		$params = Flight::aod()->from(self::$table)
 		->limit(20)
 		->sortDesc('rank_id')
 		->join('rank', array('rank.id' => 'rank_id'))
@@ -69,9 +69,13 @@ class Member extends Application {
 		$params = self::find(array('member_id' => $member_id));
 		if (count($params)) {
 			return $params->forum_name;
-		} else {
-			return false;
 		}
+		return false;
+	}
+
+	public static function createAODlink($args) {
+		$string = "[profile={$args['member_id']}]{$args['forum_name']}[/profile]";
+		return $string;
 	}
 
 	public static function findRecruits($member_id, $platoon_id = false, $squad_id = false, $division_structure = false) {
@@ -113,13 +117,17 @@ class Member extends Application {
 	}
 
 	public static function findInactives($id, $type, $flagged=false) {
+<<<<<<< HEAD
 		$sql = "SELECT m.id, m.forum_name, m.member_id, m.last_activity, i.flagged_by, m.forum_posts, m.join_date, p.number as plt_number, p.name as plt_name 
+=======
+		$sql = "SELECT m.forum_name, m.member_id, m.last_activity, i.flagged_by, m.forum_posts, m.join_date, p.number as plt_number, p.name as plt_name
+>>>>>>> refs/remotes/origin/master
 		FROM ".Member::$table." m
-		
-		LEFT JOIN ".InactiveFlagged::$table." i ON m.member_id = i.member_id 
-		LEFT JOIN ".Platoon::$table." p on m.platoon_id = p.id 
 
-		WHERE (status_id = 1) AND (last_activity < CURDATE() - INTERVAL 30 DAY) AND 
+		LEFT JOIN ".InactiveFlagged::$table." i ON m.member_id = i.member_id
+		LEFT JOIN ".Platoon::$table." p on m.platoon_id = p.id
+
+		WHERE (status_id = 1) AND (last_activity < CURDATE() - INTERVAL 30 DAY) AND
 		m.member_id NOT IN (SELECT member_id FROM ".LeaveOfAbsence::$table.") AND ";
 
 		switch ($type) {

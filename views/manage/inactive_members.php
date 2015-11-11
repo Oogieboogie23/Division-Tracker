@@ -43,7 +43,8 @@
 
 									<?php $alias = MemberHandle::findByMemberId($player->id); ?>
 									<?php foreach($alias as $name): ?>
-									<?php $aliasName = $name->handle_value; ?>
+										var_dump($name);
+										<?php $aliasName = BATTLELOG . $name->handle_value; ?>
 									<?php endforeach; ?>
 
 									<?php $flaggedCopy .= "[tr][td][COLOR=\"#FF0000\"]{$player->forum_name}[/color][/td][td][url=" . CLANAOD . "{$player->member_id}]Forum Account[/url][/td][td][url=http://aodwebhost.site.nfoservers.com/tracker/member/{$player->member_id}]Tracker Profile[/url][/td][td][url=" . BATTLELOG . "{$aliasName}]Battlelog[/url][/td][/tr]"; ?>
