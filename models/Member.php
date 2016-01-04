@@ -117,12 +117,7 @@ class Member extends Application {
 	}
 
 	public static function findInactives($id, $type, $flagged=false) {
-<<<<<<< HEAD
-		$sql = "SELECT m.id, m.forum_name, m.member_id, m.last_activity, i.flagged_by, m.forum_posts, m.join_date, p.number as plt_number, p.name as plt_name 
-=======
-		$sql = "SELECT m.forum_name, m.member_id, m.last_activity, i.flagged_by, m.forum_posts, m.join_date, p.number as plt_number, p.name as plt_name
->>>>>>> refs/remotes/origin/master
-		FROM ".Member::$table." m
+		$sql = "SELECT m.forum_name, m.member_id, m.last_activity, i.flagged_by, m.forum_posts, m.join_date, p.number as plt_number, p.name as plt_name FROM ".Member::$table." m
 
 		LEFT JOIN ".InactiveFlagged::$table." i ON m.member_id = i.member_id
 		LEFT JOIN ".Platoon::$table." p on m.platoon_id = p.id
