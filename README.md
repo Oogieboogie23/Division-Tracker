@@ -2,7 +2,7 @@
 An in-house member activity tracking tool.
 
 ## Tracker v2
-This project is based largely on Mike Cao's [Flight](http://flightphp.com/learn) framework, in conjunction with Sparrow. 
+This project is based largely on Mike Cao's [Flight](http://flightphp.com/learn) framework, in conjunction with [Sparrow](https://github.com/mikecao/sparrow). 
 
 <a href="http://deploybot.com"><img src="https://aod.deploybot.com/badge/23779030021075/59044.svg" alt="Deployment status from DeployBot"></a>
 
