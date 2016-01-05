@@ -207,7 +207,7 @@
 
 	<?php
 
-	// debug information
+// debug information
 
 	if ( isset($_SESSION['userid']) ) {
 		Flight::aod()->show_sql = true;
