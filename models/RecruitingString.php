@@ -13,6 +13,7 @@ class RecruitingString extends Application
 
     public static function findByName($name, $game_id)
     {
-        return self::find(array('name' => $name, 'game_id' => $game_id));
+        $data = Flight::aod()->using('RecruitingString');
+        return $data->find(['name' => $name, 'game_id' => $game_id]);
     }
 }
