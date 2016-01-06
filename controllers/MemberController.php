@@ -280,6 +280,9 @@ class MemberController
             'game_id' => $_POST['game_id'],
             'status_id' => 999,
             'join_date' => date("Y-m-d H:i:s"),
+            'last_forum_login' => date("Y-m-d H:i:s"),
+            'last_activity' => date("Y-m-d H:i:s"),
+            'last_forum_post' => date("Y-m-d H:i:s"),
             'rank_id' => 1,
             'platoon_id' => $platoon_id,
             'squad_id' => $squad_id,
@@ -298,7 +301,6 @@ class MemberController
             'squad_id' => $squad_id,
             'position_id' => $position_id
         );
-
 
         if (Member::exists($_POST['member_id'])) {
 
