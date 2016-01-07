@@ -7,12 +7,17 @@ class Database extends Sparrow
     public function __construct($database)
     {
         $config = [
-            'type' => self::$type,
-            'hostname' => DB_HOST,
-            'database' => $database,
-            'username' => DB_USER,
-            'password' => DB_PASS
+        'type' => self::$type,
+        'hostname' => DB_HOST,
+        'database' => $database,
+        'username' => DB_USER,
+        'password' => DB_PASS
         ];
-        $this->setDb($config);
+        try {
+            $this->setDb($config);
+        } catch (PDOException $e) {
+            echo "Connection to the server database failed.";
+            die;
+        }
     }
 }
