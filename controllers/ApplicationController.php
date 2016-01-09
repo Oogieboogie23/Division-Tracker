@@ -5,7 +5,6 @@ class ApplicationController
 
     public static function _index()
     {
-
         $user = User::find(intval($_SESSION['userid']));
         $member = Member::find(intval($_SESSION['memberid']));
         $tools = Tool::find_all($user->role);
@@ -17,7 +16,6 @@ class ApplicationController
         $platoon = Platoon::find($member->platoon_id);
         $squads = Squad::findAll($member->game_id, $member->platoon_id);
 
-
         Flight::render('user/main_tools', compact('user', 'tools'), 'main_tools');
         Flight::render('member/personnel', compact('member', 'squad', 'platoon', 'squads'), 'personnel');
         Flight::render('application/divisions', compact('divisions'), 'divisions_list');
@@ -26,17 +24,21 @@ class ApplicationController
         Flight::render('layouts/application', compact('user', 'member', 'tools', 'divisions', 'division'));
     }
 
-    public static function _activity()
+    public static function _activity($findBy=false)
     {
+        var_dump($findBy);
         $user = User::find(intval($_SESSION['userid']));
         $member = Member::find(intval($_SESSION['memberid']));
         $tools = Tool::find_all($user->role);
         $divisions = Division::find_all();
         $division = Division::findById(intval($member->game_id));
-        $js = 'help';
-        Flight::render('application/activity', array('division' => $division), 'content');
-        Flight::render('layouts/application', compact('js', 'user', 'member', 'tools', 'divisions'));
 
+        if ($findBy) {
+            $division = Division::findByName($findBy);
+        }
+
+        Flight::render('application/activity', compact('division'), 'content');
+        Flight::render('layouts/application', compact('user', 'member', 'tools', 'divisions'));
     }
 
     public static function _help()

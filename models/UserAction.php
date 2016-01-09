@@ -40,7 +40,12 @@ class UserAction extends Application
         $UserAction->save($params);
     }
 
-    public static function find_all($game_id, $limit = false)
+    public static function find_all()
+    {
+        return self::fetch_all();
+    }
+
+    public static function findByDivision($game_id, $limit = false)
     {
         if (!$limit) {
             $limit = 10;

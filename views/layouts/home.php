@@ -45,10 +45,10 @@
 				<?php echo $personnel ?>
 			</div>
 			<div class='col-md-5'>
-				<div class="panel panel-info">
-					<div class="panel-heading"><strong>Recent Activity</strong></div>
+				<div class="panel panel-primary">
+					<div class="panel-heading"><strong>Recent Activity</strong><a href="activity/" class="pull-right">View more &raquo;</a></div>
 					<ul class="activity-list">
-						<?php foreach(UserAction::find_all($division->id,15) as $action) : ?>
+						<?php foreach(UserAction::findByDivision($division->id,15) as $action) : ?>
 							<?php if ( ! is_null ( $action->target_id ) ): ?>
 								<li>
 									<i class="<?php echo $action->icon; ?> fa-2x"></i>
@@ -60,6 +60,7 @@
 							<?php endif; ?>
 						<?php endforeach; ?>
 					</ul>
+					<div class="panel-footer"><a href="activity/" class="btn btn-default">View more &raquo;</a></div>
 				</div>
 			</div>
 		</div>

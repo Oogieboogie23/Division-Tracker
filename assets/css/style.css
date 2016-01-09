@@ -847,6 +847,14 @@ div.chart_div table {
   margin-left: 5px;
 }
 
+.panel-primary .panel-heading a {
+  color: #fff
+}
+
+.panel-primary .panel-heading a:hover {
+  text-decoration: underline;
+}
+
 
 
 /** draggable division unassigned */
