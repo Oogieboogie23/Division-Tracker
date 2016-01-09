@@ -158,6 +158,8 @@ class DivisionController
             case 4:
                 $division_structure = new SWBDivisionStructure($member->game_id);
                 break;
+            default:
+                $division_structure = new DivisionStructure($member->game_id);
         }
 
         Flight::render('modals/division_structure', array('division_structure' => $division_structure->content));
