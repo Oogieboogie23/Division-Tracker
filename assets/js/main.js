@@ -1,6 +1,18 @@
-$(function() {
+$(function () {
 
-    $(".send-pm").click(function(e) {
+    $('#search-collection').keyup(function () {
+        var value = $(this).val();
+        // case insensitive search
+        var exp = new RegExp('^' + value, 'i');
+        var items = ".collection .collection-item";
+        $(items).each(function () {
+            // toggle items that don't meet criteria
+            var isMatch = exp.test($(this).text());
+            $(this).toggle(isMatch);
+        });
+    });
+
+    $(".send-pm").click(function (e) {
         e.preventDefault();
         var members = $(this).attr('data-members'),
             intArray = members.split(",").map(Number).filter(Boolean),
@@ -14,14 +26,14 @@ $(function() {
             }
         }
 
-    })
+    });
 
-    $(".modal").delegate("#submit-issue #submit_btn", "click", function(e) {
+    $(".modal").delegate("#submit-issue #submit_btn", "click", function (e) {
 
         e.preventDefault();
         var url = "do/issue-submit";
 
-        if ($("#submit-issue #title").val() ==='') {
+        if ($("#submit-issue #title").val() === '') {
             $("#submit-issue #title").parent().addClass("has-error");
             $(".modal-body").prepend($(".alert-box").html("<div class='alert alert-danger'><i class='fa fa-times'></i> You must provide a title.</div>"));
             return false;
@@ -32,7 +44,7 @@ $(function() {
             url: url,
             dataType: 'json',
             data: $("#submit-issue").serialize(),
-            success: function(data) {
+            success: function (data) {
                 if (data.success) {
                     $('.modal').modal('hide');
                     $(".alert-box").html("<div class='alert alert-success'><i class='fa fa-check'></i> " + data.message + "</div>").effect('highlight').delay(3000).fadeOut();
@@ -44,7 +56,7 @@ $(function() {
         return false;
     });
 
-    $(".send-email-validation").click(function(e) {
+    $(".send-email-validation").click(function (e) {
         e.preventDefault();
         var url = "do/reset-authentication",
             email = $(this).attr('data-email'),
@@ -56,7 +68,7 @@ $(function() {
             data: {
                 email: email
             },
-            success: function(data) {
+            success: function (data) {
                 if (data.success) {
                     $(alert).attr('class', 'alert alert-success').html("<i class='fa fa-check fa-lg'></i> A validation code has been sent to your email.").delay(3000).fadeOut();
                 } else {
@@ -67,7 +79,7 @@ $(function() {
 
     });
 
-    $(".resend-btn").click(function(e) {
+    $(".resend-btn").click(function (e) {
         e.preventDefault();
         var url = "do/reset-authentication",
             email = $("#email").val(),
@@ -83,10 +95,10 @@ $(function() {
                 url: url,
                 dataType: 'json',
                 data: $("#verify").serialize(),
-                success: function(data) {
+                success: function (data) {
                     if (data.success) {
                         $(".alert-box").html("<div class='alert alert-success'><i class='fa fa-check'></i> " + data.message + "</div>").effect('highlight').delay(3000).fadeOut();
-                        setTimeout(function() {
+                        setTimeout(function () {
                             window.location.href = "./";
                         }, 1200);
                     } else {
@@ -97,7 +109,7 @@ $(function() {
         }
     });
 
-    $("#verify .submit-btn").click(function(e) {
+    $("#verify .submit-btn").click(function (e) {
         e.preventDefault();
         var url = "do/authenticate",
             email = $("#email").val(),
@@ -113,10 +125,10 @@ $(function() {
                 url: url,
                 dataType: 'json',
                 data: $("#verify").serialize(),
-                success: function(data) {
+                success: function (data) {
                     if (data.success) {
                         $(".alert-box").html("<div class='alert alert-success'><i class='fa fa-check'></i> " + data.message + "</div>").effect('highlight').delay(3000).fadeOut();
-                        setTimeout(function() {
+                        setTimeout(function () {
                             window.location.href = "./";
                         }, 1200);
                     } else {
@@ -128,23 +140,23 @@ $(function() {
     });
 
 
-    $("#searchclear").click(function() {
+    $("#searchclear").click(function () {
         $("#member-search").val('');
         $('#member-search-results').empty();
     });
 
 
     // bug report / issue creation
-    $(".create-issue").click(function(e) {
+    $(".create-issue").click(function (e) {
         e.preventDefault();
         $(".viewPanel .viewer").load("create/issue/");
         $(".viewPanel").modal();
 
     });
 
-    $("#pm-checked").click(function(event) {
+    $("#pm-checked").click(function (event) {
         event.preventDefault();
-        var searchIDs = $("#squads input:checkbox:checked, #squad input:checkbox:checked").map(function() {
+        var searchIDs = $("#squads input:checkbox:checked, #squad input:checkbox:checked").map(function () {
             return $(this).data('id');
         }).get();
         var joinedIds = searchIDs.join('&u[]=');
@@ -158,25 +170,25 @@ $(function() {
 
     });
 
-    $(".toggle-pm").click(function() {
+    $(".toggle-pm").click(function () {
         $("#squads input:checkbox, #squad input:checkbox").toggle();
         $("#pm-checked").toggle();
         $(".member-item").toggleClass('member-item-push');
     });
 
 
-    $(":checkbox").click(function() {
+    $(":checkbox").click(function () {
         $('.count-pm').text($(":checkbox:checked").length);
     });
 
-    $("#member-search").bind("keypress", function(e) {
+    $("#member-search").bind("keypress", function (e) {
         if (e.keyCode == 13) {
             return false;
         }
     });
 
     // powers live search for members
-    $('#member-search').keyup(function(e) {
+    $('#member-search').keyup(function (e) {
         clearTimeout($.data(this, 'timer'));
         if (e.keyCode == 13) {
             member_search();
@@ -193,7 +205,7 @@ $(function() {
 
     $(".alert").alert();
 
-    $('.alert').bind('closed.bs.alert', function() {
+    $('.alert').bind('closed.bs.alert', function () {
         var id = $(this).data('id'),
             user = $(this).data('user');
 
@@ -204,12 +216,12 @@ $(function() {
     });
 
     // popup link
-    $(".popup-link").click(function(e) {
+    $(".popup-link").click(function (e) {
         e.preventDefault();
         windowOpener($(this).attr("href"), "AOD Squad Tracking", "width=900,height=600,scrollbars=yes");
     });
 
-    $(".edit-member").click(function() {
+    $(".edit-member").click(function () {
         var member_id = $(this).parent().attr('data-player-id');
 
         $(".viewPanel .viewer").load("edit/member/", {
@@ -218,7 +230,7 @@ $(function() {
         $(".viewPanel").modal();
     });
 
-    $(".removeMember").click(function(e) {
+    $(".removeMember").click(function (e) {
         e.preventDefault();
 
 
@@ -242,7 +254,7 @@ $(function() {
                 closeOnConfirm: true
             },
 
-            function() {
+            function () {
 
                 if (listgroup) {
                     $this.closest('.list-group-item').remove();
@@ -258,18 +270,18 @@ $(function() {
     });
 
 
-    $(".divGenerator").click(function(e) {
+    $(".divGenerator").click(function (e) {
         e.preventDefault();
         $(".viewPanel .viewer").load("get/division-structure");
         $(".viewPanel").modal();
     });
 
 
-    $(".container").on("click", ".reload", function() {
+    $(".container").on("click", ".reload", function () {
         loadThreadCheck();
     });
 
-    $('#rctTab a').click(function(e) {
+    $('#rctTab a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
     });
@@ -278,34 +290,34 @@ $(function() {
     /**
      * navigation links for user cp
      */
-    $('.logout-btn').click(function(e) {
+    $('.logout-btn').click(function (e) {
         e.preventDefault();
         window.location.href = "logout";
     });
-    $('.settings-btn').click(function(e) {
+    $('.settings-btn').click(function (e) {
         e.preventDefault();
         window.location.href = "user/settings";
     });
-    $('.profile-btn').click(function(e) {
+    $('.profile-btn').click(function (e) {
         e.preventDefault();
         window.location.href = "user/profile";
     });
-    $('.messages-btn').click(function(e) {
+    $('.messages-btn').click(function (e) {
         e.preventDefault();
         window.location.href = "user/messages";
     });
 
-    $('#register').submit(function(e) {
+    $('#register').submit(function (e) {
         e.preventDefault();
 
         $.post("do/register",
             $(this).serialize(),
-            function(data) {
+            function (data) {
                 if (data['success'] === true) {
                     $('.register-btn').removeClass('btn-primary').addClass('btn-success').text('Success!');
                     $('.msg').fadeOut();
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.href = "./";
                     }, 1000);
 
@@ -316,7 +328,7 @@ $(function() {
 
     });
 
-    $('.count-animated').each(function() {
+    $('.count-animated').each(function () {
         var $this = $(this);
         jQuery({
             Counter: 0
@@ -325,7 +337,7 @@ $(function() {
         }, {
             duration: 3000,
             easing: "easeOutQuart",
-            step: function() {
+            step: function () {
                 if ($this.hasClass('percentage')) {
                     $this.text(formatNumber(Math.ceil(this.Counter) + "%"));
                 } else {
@@ -387,13 +399,12 @@ function member_search() {
             data: {
                 name: $('input#member-search').val()
             },
-            success: function(response) {
+            success: function (response) {
                 $('#member-search-results').html(response);
             }
         });
     }
 }
-
 
 
 /**
@@ -402,8 +413,8 @@ function member_search() {
 
 var client = new ZeroClipboard($('.copy-button'));
 
-client.on("ready", function(readyEvent) {
-    client.on("aftercopy", function(event) {
+client.on("ready", function (readyEvent) {
+    client.on("aftercopy", function (event) {
         alert("Copied text to clipboard");
     });
 });
@@ -450,7 +461,7 @@ $.fn.selectText = function () {
 
 function ucwords(str) {
     return (str + '')
-        .replace(/^([a-z\u00E0-\u00FC])|\s+([a-z\u00E0-\u00FC])/g, function($1) {
+        .replace(/^([a-z\u00E0-\u00FC])|\s+([a-z\u00E0-\u00FC])/g, function ($1) {
             return $1.toUpperCase();
         });
 }
