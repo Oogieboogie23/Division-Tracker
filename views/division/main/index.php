@@ -28,8 +28,8 @@
                     <div class="btn-group pull-right">
                         <a class="btn btn-default edit-div disabled" href="#" target="_blank"><i
                                 class="fa fa-pencil"></i> <span class="hidden-xs hidden-sm">Edit Division</span></a>
-                        <a class="btn btn-default create-div disabled" href="#" target="_blank"><i
-                                class="fa fa-plus-square"></i> <span class="hidden-xs hidden-sm">Create Division</span></a>
+                        <a class="btn btn-success create-div disabled" href="#" target="_blank"><i
+                                class="fa fa-plus-square"></i> <span class="hidden-xs hidden-sm">Create <?php echo Locality::run('Platoon', $division->id); ?></span></a>
                     </div>
                 <?php endif; ?>
             </h2>

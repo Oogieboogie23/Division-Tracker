@@ -70,9 +70,9 @@
 									<li><a href="member/<?php echo $member->member_id; ?>"><?php echo ucwords($member->forum_name); ?><span class="pull-right"><?php echo Member::avatar($member->member_id) ?></span></a></li>
 									<li class="divider"></li>
 									<li class='disabled'><a href='#' disabled>Role: <?php echo getUserRoleName($user->role); ?></a></li><li class='divider'></li>
-									<li><a href="#" data-toggle="pill" class="settings-btn"> Settings</a></li>
+<!--									<li><a href="#" data-toggle="pill" class="settings-btn"> Settings</a></li>-->
 									<li><a href="http://www.clanaod.net/forums/member.php?u=<?php echo $member->member_id; ?>" target="_blank"> Forum profile</a></li>
-									<li> <a href="help/" role="button">Help</a> </li>
+<!--									<li> <a href="help/" role="button">Help</a> </li>-->
 									<li class="divider"></li>
 									<li><a href="#" data-toggle="pill" class="logout-btn"><i class="fa fa-lock pull-right"></i> Logout</a></li>
 								</ul>
