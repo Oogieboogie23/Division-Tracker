@@ -86,7 +86,8 @@ if (count($divisions)) {
                     );
 
                     try {
-                        $member_being_updated = $pdo->prepare("SELECT rank_id FROM member WHERE member_id = {$memberid}")->execute();
+                        $member_being_updated = $pdo->prepare("SELECT rank_id FROM member WHERE member_id = {$memberid} LIMIT 1");
+                        $member_being_updated->execute();
                         $member_being_updated = $member_being_updated->fetch();
                         if (array_key_exists('rank_id', $member_being_updated)) {
                             if ($member_being_updated['rank_id'] < $aodrankval) {
