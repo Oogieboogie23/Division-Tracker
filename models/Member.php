@@ -15,6 +15,7 @@ class Member extends Application
     public $last_forum_login;
     public $last_activity;
     public $last_forum_post;
+    public $last_promotion;
     public $forum_posts;
     public $recruiter;
 
