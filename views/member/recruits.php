@@ -6,7 +6,7 @@
 			<?php foreach ($recruits as $player) : ?>
 				<a href="member/<?php echo $player->member_id ?>" class="list-group-item clearfix">
 					<span class="col-xs-5"><?php echo Rank::convert($player->rank_id)->abbr . " " . $player->forum_name ?></span>
-					<span class="col-xs-5 text-muted">Recruited <?php echo formatTime(strtotime($player->join_date)); ?></span>
+					<span class="col-xs-5 text-muted">Joined <?php echo formatTime(strtotime($player->join_date)); ?></span>
 					<?php if ($player->status_id == 4) : ?>
 						<span class="col-xs-2 text-center text-danger"><i class="fa fa-times"></i> Removed</span>
 					<?php endif; ?>
