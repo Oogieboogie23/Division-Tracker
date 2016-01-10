@@ -60,7 +60,7 @@
 									<ul>
 										<li>You must <strong>be in Teamspeak</strong> whenever you're ingame.</li>
 										<li>You must <strong>login to the forums</strong> at least once a month.</li>
-										<li>You should strive to <strong>be a contributing member</strong> of the clan. This includes helping us populate the server, and staying loyal to our servers whenever possible.</li>
+										<li>You should strive to <strong>be a contributing member</strong> of the clan. Play with us as often as you can. DOn't be a lone wolf.</li>
 										<li>You must <strong>show respect</strong> to other members as well as all other public players.</li>
 									</ul>
 
