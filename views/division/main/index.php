@@ -88,7 +88,13 @@
                         <div class="panel panel-danger">
                             <div class="panel-heading"><strong>Unassigned members</strong> <span
                                     class="badge"><?php echo count($unassigned) ?></span></div>
-                            <div class="panel-body unassigned-members"><p>
+                            <div class="panel-body unassigned-members collection">
+
+                                <!--  Form Input -->
+                                <input class="form-control" id="search-collection" type="text"
+                                       placeholder="Filter list"/>
+
+                                <p>
                                     <?php if (is_object($unassigned)): ?>
                                 <h4 style="display: inline-block; z-index:500; padding: 3px;" class="unassigned"
                                     data-member-id="<?php echo $unassigned->member_id ?>"><a
@@ -97,7 +103,7 @@
                                 </h4>
                                 <?php else: ?>
                                     <?php foreach ($unassigned as $member): ?>
-                                        <h4 style="display: inline-block; z-index:500; padding: 3px;" class="unassigned"
+                                        <h4 style="display: inline-block; z-index:500; padding: 3px;" class="unassigned collection-item"
                                             data-member-id="<?php echo $member->member_id ?>"><a
                                                 href="member/<?php echo $member->member_id ?>"
                                                 class="label label-default movable"><?php echo $member->forum_name; ?></a>
