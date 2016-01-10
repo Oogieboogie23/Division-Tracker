@@ -3,7 +3,7 @@
     <?php $unassigned = Division::findUnassigned($division->id); ?>
 
     <?php if (count($unassigned)): ?>
-        <div class="container">
+        <div class=" margin-top-20">
             <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <strong>Heads up!</strong> Your
                 division has unassigned members. Drag them onto a <?php echo Locality::run('platoon', $division->id); ?>
                 to assign them. Ensure they have been formally recruited.
