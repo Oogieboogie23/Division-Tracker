@@ -1,14 +1,15 @@
 <?php if (count($division)) : ?>
-
-    <?php $unassigned = Division::findUnassigned($division->id); ?>
-
-    <?php if (count($unassigned)): ?>
-        <div class="container margin-top-20">
-            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <strong>Heads up!</strong> Your
-                division has unassigned members. Drag them onto a <?php echo Locality::run('platoon', $division->id); ?>
-                to assign them. Ensure they have been formally recruited.
+    <?php if ($user->role >= 3 && $member->game_id === $division->id || User::isDev()): ?>
+        <?php $unassigned = Division::findUnassigned($division->id); ?>
+        <?php if (count($unassigned)): ?>
+            <div class="container margin-top-20">
+                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <strong>Heads up!</strong> Your
+                    division has unassigned members. Drag them onto a <?php echo Locality::run('platoon',
+                        $division->id); ?>
+                    to assign them. Ensure they have been formally recruited.
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
     <?php endif; ?>
 
     <div class='container'>
@@ -81,46 +82,46 @@
             </div>
         </div>
 
-        <?php if (count($unassigned)): ?>
-            <div class="unassigned-members-container">
-                <div class='row'>
-                    <div class="col-xs-12">
-                        <div class="panel panel-danger">
-                            <div class="panel-heading"><strong>Unassigned members</strong> <span
-                                    class="badge"><?php echo count($unassigned) ?></span></div>
-                            <div class="panel-body unassigned-members collection">
+        <?php if ($user->role >= 3 && $member->game_id === $division->id || User::isDev()): ?>
+            <?php if (count($unassigned)): ?>
+                <div class="unassigned-members-container">
+                    <div class='row'>
+                        <div class="col-xs-12">
+                            <div class="panel panel-danger">
+                                <div class="panel-heading"><strong>Unassigned members</strong> <span
+                                        class="badge"><?php echo count($unassigned) ?></span></div>
+                                <div class="panel-body unassigned-members collection">
 
-                                <!--  Form Input -->
-                                <input class="form-control" id="search-collection" type="text"
-                                       placeholder="Filter list"/>
+                                    <!--  Form Input -->
+                                    <input class="form-control" id="search-collection" type="text"
+                                           placeholder="Filter list"/>
 
-                                <p>
-                                    <?php if (is_object($unassigned)): ?>
-                                <h4 style="display: inline-block; z-index:500; padding: 3px;" class="unassigned"
-                                    data-member-id="<?php echo $unassigned->member_id ?>"><a
-                                        href="member/<?php echo $unassigned->member_id ?>"
-                                        class="label label-default movable"><?php echo $unassigned->forum_name; ?></a>
-                                </h4>
-                                <?php else: ?>
-                                    <?php foreach ($unassigned as $member): ?>
-                                        <h4 style="display: inline-block; z-index:500; padding: 3px;" class="unassigned collection-item"
-                                            data-member-id="<?php echo $member->member_id ?>"><a
-                                                href="member/<?php echo $member->member_id ?>"
-                                                class="label label-default movable"><?php echo $member->forum_name; ?></a>
-                                        </h4>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                                </p>
-                            </div>
-                            <div class="panel-footer text-muted"><strong>TIP</strong>: Drag and drop a member onto
-                                a <?php echo Locality::run('platoon', $division->id); ?> to assign them.
+                                    <p>
+                                        <?php if (is_object($unassigned)): ?>
+                                    <h4 style="display: inline-block; z-index:500; padding: 3px;" class="unassigned"
+                                        data-member-id="<?php echo $unassigned->member_id ?>"><a
+                                            href="member/<?php echo $unassigned->member_id ?>"
+                                            class="label label-default movable"><?php echo $unassigned->forum_name; ?></a>
+                                    </h4>
+                                    <?php else: ?>
+                                        <?php foreach ($unassigned as $member): ?>
+                                            <h4 style="display: inline-block; z-index:500; padding: 3px;"
+                                                class="unassigned collection-item"
+                                                data-member-id="<?php echo $member->member_id ?>"><a
+                                                    href="member/<?php echo $member->member_id ?>"
+                                                    class="label label-default movable"><?php echo $member->forum_name; ?></a>
+                                            </h4>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                    </p>
+                                </div>
+                                <div class="panel-footer text-muted"><strong>TIP</strong>: Drag and drop a member onto
+                                    a <?php echo Locality::run('platoon', $division->id); ?> to assign them.
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <?php if ($user->role >= 3 && $member->game_id === $division->id || User::isDev()): ?>
-
             <?php endif; ?>
         <?php endif; ?>
     </div>
