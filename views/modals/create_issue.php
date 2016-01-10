@@ -13,7 +13,7 @@
 			<input type='text' class='form-control' name='title' id='title' placeholder='Issue title' required></input>
 		</div>
 		<div class="form-group">
-			<input type='text' class='form-control' name='link' placeholder='Link where problem occurred' value="<?php echo $_SERVER['REQUEST_URI']; ?>" required />
+			<input type='text' class='form-control' name='link' placeholder='Link where problem occurred' required />
 		</div>
 		<div class="form-group">
 			<textarea rows="5" class='form-control' name='body' placeholder='Detailed explanation' required></textarea>
