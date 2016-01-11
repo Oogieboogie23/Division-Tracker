@@ -7,7 +7,7 @@
 		<?php if (count((array)$squadMembers)) : ?>
 
 			<div class='panel panel-default'>
-				<div class='panel-heading'><strong> Your squad</strong> <span class="pull-right"><?php echo count((array) $squadMembers); ?> members</span></div>
+				<div class='panel-heading'><strong> Your <?php echo Locality::run("squad", $member->game_id); ?></strong> <span class="pull-right"><?php echo count((array) $squadMembers); ?> members</span></div>
 				<div class='list-group' id='squad'>
 
 					<?php foreach($squadMembers as $player) : ?>
@@ -34,7 +34,7 @@
 	<?php elseif ($user->role == 2) : ?><!-- if platoon leader -->
 
 		<div class='panel panel-default'>
-			<div class='panel-heading'><strong> Your Platoon</strong> <span class=" pull-right"><?php echo Platoon::countPlatoon($member->platoon_id); ?> members</span></div>
+			<div class='panel-heading'><strong> Your <?php echo Locality::run("Platoon", $member->game_id); ?></strong> <span class=" pull-right"><?php echo Platoon::countPlatoon($member->platoon_id); ?> members</span></div>
 			<div class='list-group' id='squads'>
 				<?php if (count((array) $squads)) : $i = 1;	?>
 

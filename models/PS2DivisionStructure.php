@@ -46,13 +46,13 @@ class PS2DivisionStructure
         $division_structure .= "[tr][td]";
 
         // banner
-        $division_structure .= "[center][img]http://puu.sh/kGjU9/4f331d1a99.jpg[/img][/center]\r\n";
+        $division_structure .= "[center][img]http://i.imgur.com/BKkTYMC.jpg[/img][/center]\r\n";
 
         /**
          * ------division leaders-----
          */
 
-        $division_structure .= "\r\n\r\n[center][size=5][color={$this->div_name_color}][b][i][u]Division Leaders[/u][/i][/b][/color][/size][/center]\r\n";
+        $division_structure .= "\r\n\r\n[center][size=5][color={$this->div_name_color}][b][i][u]Division Leadership[/u][/i][/b][/color][/size][/center]\r\n";
         $division_structure .= "[center][size=4]";
 
         $division_leaders = Division::findDivisionLeaders($this->game_id);
@@ -107,9 +107,9 @@ class PS2DivisionStructure
             if ($platoon->leader_id != 0) {
                 $player_name = Rank::convert($player->rank_id)->abbr." ".$player->forum_name;
                 $aod_url = Member::createAODlink(array('member_id'=>$player->member_id, 'forum_name'=>$player_name, 'color'=>$this->platoon_leaders_color));
-                $division_structure .= "[size=3][color={$this->platoon_pos_color}]Legion Commander[/color]\r\n{$aod_url}[/size]\r\n\r\n";
+                $division_structure .= "[size=3]{$aod_url}[/size]\r\n\r\n";
             } else {
-                $division_structure .= "[size=3][color={$this->platoon_pos_color}]Legion Commander[/color]\r\n[color={$this->platoon_leaders_color}]TBA[/color][/size]\r\n\r\n";
+                $division_structure .= "[size=3][color={$this->platoon_leaders_color}]TBA[/color][/size]\r\n\r\n";
             }
 
             // Regimental Leaders
