@@ -89,11 +89,13 @@ if (count($divisions)) {
                         $member_being_updated = $pdo->prepare("SELECT rank_id FROM member WHERE member_id = {$memberid} LIMIT 1");
                         $member_being_updated->execute();
                         $member_being_updated = $member_being_updated->fetch();
-                        if (array_key_exists('rank_id', $member_being_updated)) {
-                            if ($member_being_updated['rank_id'] < $aodrankval) {
-                                // member was promoted, update promotion date
-                                $today = date('Y-m-d H:i:s');
-                                $pdo->prepare("UPDATE member SET last_promotion = '{$today}' WHERE member_id = {$memberid}")->execute();
+                        if (is_array($member_being_updated)) {
+                            if (array_key_exists('rank_id', $member_being_updated)) {
+                                if ($member_being_updated['rank_id'] < $aodrankval) {
+                                    // member was promoted, update promotion date
+                                    $today = date('Y-m-d H:i:s');
+                                    $pdo->prepare("UPDATE member SET last_promotion = '{$today}' WHERE member_id = {$memberid}")->execute();
+                                }
                             }
                         }
                     } catch (PDOException $e) {
