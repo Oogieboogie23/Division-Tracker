@@ -1,12 +1,12 @@
 <?php
 
 /**
- * PS2 Division Structure
+ * SWB Division Structure
  *
  * Generates a bb-code template with prepopulated member data
  *
  */
-class PS2DivisionStructure
+class SWBDivisionStructure
 {
     public function __construct($game_id)
     {
