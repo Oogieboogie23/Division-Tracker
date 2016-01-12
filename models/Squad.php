@@ -2,18 +2,12 @@
 
 class Squad extends Application
 {
+    public static $table = 'squad';
+    public static $id_field = 'id';
     public $id;
     public $platoon_id;
     public $leader_id;
     public $game_id;
-
-    public static $table = 'squad';
-    public static $id_field = 'id';
-
-    public static function findById($id)
-    {
-        return (object) self::find($id);
-    }
 
     public static function findAll($game_id, $platoon_id = false)
     {
@@ -30,6 +24,11 @@ class Squad extends Application
     {
         $member_id = self::findById($squad_id)->leader_id;
         return Member::findMemberId($member_id);
+    }
+
+    public static function findById($id)
+    {
+        return (object) self::find($id);
     }
 
     public static function findByPlatoonId($platoon_id)
@@ -73,6 +72,11 @@ class Squad extends Application
         }
     }
 
+    public static function countSquadMembers($squad_id)
+    {
+        return count(self::findSquadMembers($squad_id));
+    }
+
     public static function findSquadMembers($squad_id, $div_struc_sort = false, $recruiter = false)
     {
         $conditions = ($recruiter) ? array(
@@ -83,14 +87,9 @@ class Squad extends Application
         ) : array('squad_id' => $squad_id, 'position_id' => 6, 'status_id @' => array(1, 3, 999));
 
         if ($div_struc_sort) {
-            return Flight::aod()->from(Member::$table)->where($conditions)->sortDesc('rank_id')->many();
+            return Flight::aod()->from(Member::$table)->where($conditions)->sortDesc('rank_id')->sortAsc('forum_name')->many();
         } else {
             return Flight::aod()->from(Member::$table)->where($conditions)->sortAsc('last_activity')->many();
         }
-    }
-
-    public static function countSquadMembers($squad_id)
-    {
-        return count(self::findSquadMembers($squad_id));
     }
 }

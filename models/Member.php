@@ -2,6 +2,9 @@
 
 class Member extends Application
 {
+    public static $table = 'member';
+    public static $id_field = 'id';
+    public static $name_field = 'forum_name';
     public $id;
     public $forum_name;
     public $member_id;
@@ -19,13 +22,9 @@ class Member extends Application
     public $forum_posts;
     public $recruiter;
 
-    public static $table = 'member';
-    public static $id_field = 'id';
-    public static $name_field = 'forum_name';
-
     public static function findByName($forum_name)
     {
-        return (object)self::find($forum_name);
+        return (object) self::find($forum_name);
     }
 
     public static function exists($member_id)
@@ -66,12 +65,12 @@ class Member extends Application
 
     public static function findById($userId)
     {
-        return (object)self::find($userId);
+        return (object) self::find($userId);
     }
 
     public static function findByMemberId($member_id)
     {
-        return (object)self::find(array('member_id' => $member_id));
+        return (object) self::find(array('member_id' => $member_id));
     }
 
     public static function findForumName($member_id)
@@ -85,9 +84,36 @@ class Member extends Application
 
     public static function createAODlink($args)
     {
-        $string = "[profile={$args['member_id']}]{$args['forum_name']}[/profile]";
-        if (isset($args['color'])) {
+        if (array_key_exists('color', $args)) {
             $string = "[profile={$args['member_id']}][color={$args['color']}]{$args['forum_name']}[/color][/profile]";
+        } elseif (array_key_exists('rank', $args)) {
+            switch (strtolower($args['rank'])) {
+                case "rct":
+                case "cdt":
+                case "pvt":
+                case "pfc":
+                case "lcpl":
+                case "cpl":
+                    $args['color'] = "#ff0000";
+                    break;
+                case "sgt":
+                    $args['color'] = "#00FF00";
+                    break;
+                case "ssgt":
+                    $args['color'] = "#2E2EFE";
+                    break;
+                case "msgt":
+                    $args['color'] = "#CC00FF";
+                    break;
+                case "1stsgt":
+                    $args['color'] = "#00FFFF";
+                    break;
+                default:
+                    $args['color'] = "#ff0000";
+            }
+            $string = "[profile={$args['member_id']}][color={$args['color']}]{$args['rank']} {$args['forum_name']}[/color][/profile]";
+        } else {
+            $string = "[profile={$args['member_id']}]{$args['forum_name']}[/profile]";
         }
         return $string;
     }
@@ -104,7 +130,7 @@ class Member extends Application
         if ($division_structure) {
             $conditions = array_merge($conditions, array('status_id @' => array(1, 3, 999)));
         }
-        return Flight::aod()->from(self::$table)->sortDesc(array('rank_id'))->where($conditions)->select()->many();
+        return Flight::aod()->from(self::$table)->sortDesc(array('rank_id'))->sortAsc(array('forum_name'))->where($conditions)->select()->many();
     }
 
     public static function avatar($email, $type = "thumb")
@@ -179,7 +205,7 @@ class Member extends Application
 
     public static function getLastRct()
     {
-        $params = (object)Flight::aod()->from(Member::$table)->sortDesc('member_id')->where(array('status_id' => 1))->select('member_id')->one();
+        $params = (object) Flight::aod()->from(Member::$table)->sortDesc('member_id')->where(array('status_id' => 1))->select('member_id')->one();
         return $params->member_id;
     }
 

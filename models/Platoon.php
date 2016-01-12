@@ -30,6 +30,15 @@ class Platoon extends Application
         return arrayToObject($params);
     }
 
+    public static function findByName($name)
+    {
+        $query = Flight::aod()->using('Platoon');
+        $query->where([
+            'name %' => "%{$name}%"
+        ])->find();
+        return $query;
+    }
+
     public static function Leader($leader_id)
     {
         $params = Member::findById($leader_id);

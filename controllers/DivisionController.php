@@ -158,6 +158,9 @@ class DivisionController
             case 4:
                 $division_structure = new SWBDivisionStructure($member->game_id);
                 break;
+            case 6:
+                $division_structure = new PS2DivisionStructure($member->game_id);
+                break;
             default:
                 $division_structure = new DivisionStructure($member->game_id);
         }
