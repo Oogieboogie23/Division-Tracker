@@ -51,7 +51,6 @@ class PS2DivisionStructure
         /**
          * -----general sergeants-----
          */
-
         $division_structure .= "[size=3][color={$this->general_sergeants_color}]General Sergeants[/color]\r\n";
         $division_structure = $this->getGeneralSergeants($division_structure);
         $division_structure .= "[/size][/center]";
@@ -59,7 +58,6 @@ class PS2DivisionStructure
         /**
          * Groups
          */
-
         $division_structure .= "[TABLE=\"align: center\"]";
         $division_structure = $this->getGroups($division_structure);
 

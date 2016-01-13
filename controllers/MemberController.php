@@ -269,29 +269,14 @@ class MemberController
 
         $platoon_id = ($user->role >= 3 || User::isDev()) ? $_POST['platoon_id'] : $member->platoon_id;
         $squad_id = ($user->role >= 2 || User::isDev()) ? $_POST['squad_id'] : (Squad::mySquadId($member->id)) ?: 0;
-        $recruiter = ($user->role >= 2 || User::isDev()) ? Squad::findSquadLeader($_POST['squad_id']) : $member->member_id;
+        $recruiter = $member->member_id;
+
+
         $position_id = 6;
 
         // provide params for brand new members
-        $newParams = array(
+        $params = array(
             'member_id' => $_POST['member_id'],
-            'forum_name' => trim($_POST['forum_name']),
-            'recruiter' => $recruiter,
-            'game_id' => $_POST['game_id'],
-            'status_id' => 999,
-            'join_date' => date("Y-m-d H:i:s"),
-            'last_forum_login' => date("Y-m-d H:i:s"),
-            'last_activity' => date("Y-m-d H:i:s"),
-            'last_forum_post' => date("Y-m-d H:i:s"),
-            'last_promotion' => date("Y-m-d H:i:s"),
-            'rank_id' => 1,
-            'platoon_id' => $platoon_id,
-            'squad_id' => $squad_id,
-            'position_id' => $position_id
-        );
-
-        // only affect specific fields for existing members who get re-recruited
-        $existingParams = array(
             'forum_name' => trim($_POST['forum_name']),
             'recruiter' => $recruiter,
             'game_id' => $_POST['game_id'],
@@ -310,26 +295,41 @@ class MemberController
         if (Member::exists($_POST['member_id'])) {
 
             // update existing record
-            $existingParams = array_merge($existingParams, array('id' => Member::findId($_POST['member_id'])));
-            $insert_id = Member::modify($existingParams);
-            UserAction::create(array(
-                'type_id' => 10,
-                'date' => date("Y-m-d H:i:s"),
-                'user_id' => $member->member_id,
-                'target_id' => $newParams['member_id']
-            ));
-            $data = array('success' => true, 'message' => "Existing member successfully updated!");
+            $existing_member_id = Member::findId($_POST['member_id'];
+            $params = array_merge($params, array('id' => $existing_member_id)));
+
+            $insert_id = Member::modify($params);
+
+            if ($insert_id != 0) {
+                UserAction::create(array(
+                    'type_id' => 10,
+                    'date' => date("Y-m-d H:i:s"),
+                    'user_id' => $member->member_id,
+                    'target_id' => $params['member_id']
+                ));
+                $data = array('success' => true, 'message' => "Existing member successfully updated!");
+            } else {
+                $data = array('success' => false, 'message' => "Existing member could not be updated.");
+            }
+
 
         } else {
+            // member doesn't exist
+            $insert_id = Member::create($params);
 
-            $insert_id = Member::create($newParams);
-            UserAction::create(array(
-                'type_id' => 1,
-                'date' => date("Y-m-d H:i:s"),
-                'user_id' => $member->member_id,
-                'target_id' => $newParams['member_id']
-            ));
-            $data = array('success' => true, 'message' => "Member successfully added!");
+            if ($insert_id != 0) {
+
+                UserAction::create(array(
+                    'type_id' => 1,
+                    'date' => date("Y-m-d H:i:s"),
+                    'user_id' => $member->member_id,
+                    'target_id' => $params['member_id']
+                ));
+                $data = array('success' => true, 'message' => "Member successfully added!");
+            } else {
+                $data = array('success' => false, 'message' => "Member could not be added.");
+            }
+
         }
 
         if ($insert_id != 0) {
