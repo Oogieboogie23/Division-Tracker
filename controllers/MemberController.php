@@ -295,7 +295,7 @@ class MemberController
         if (Member::exists($_POST['member_id'])) {
 
             // update existing record
-            $existing_member_id = Member::findId($_POST['member_id'];
+            $existing_member_id = Member::findId($_POST['member_id']);
             $params = array_merge($params, array('id' => $existing_member_id)));
 
             $insert_id = Member::modify($params);
