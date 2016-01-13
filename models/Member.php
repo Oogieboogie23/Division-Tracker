@@ -241,6 +241,6 @@ class Member extends Application
             $member->$key = $value;
         }
         $member->update($params);
-        return Flight::aod()->insert_id;
+        return Flight::aod()->affected_rows;
     }
 }

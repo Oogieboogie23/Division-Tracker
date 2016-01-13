@@ -298,9 +298,9 @@ class MemberController
             $existing_member_id = Member::findId($_POST['member_id']);
             $params = array_merge($params, array('id' => $existing_member_id));
 
-            $insert_id = Member::modify($params);
+            $affected_rows = Member::modify($params);
 
-            if ($insert_id != 0) {
+            if ($affected_rows > 0) {
                 UserAction::create(array(
                     'type_id' => 10,
                     'date' => date("Y-m-d H:i:s"),
@@ -311,7 +311,6 @@ class MemberController
             } else {
                 $data = array('success' => false, 'message' => "Existing member could not be updated.");
             }
-
 
         } else {
             // member doesn't exist
