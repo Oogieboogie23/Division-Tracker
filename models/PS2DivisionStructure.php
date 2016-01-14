@@ -60,11 +60,31 @@ class PS2DivisionStructure
          */
         $division_structure .= "[TABLE=\"align: center\"]";
         $division_structure = $this->getGroups($division_structure);
-
-        $reapers = $this->getReaperGroup();
         $division_structure .= "[/table]";
 
+        // reaper group
+        $division_structure = $this->getReaperGroup($division_structure);
+
         $this->content = $division_structure;
+    }
+
+    /**
+     * @param $division_structure
+     * @return string
+     */
+    private function getDivisionLeaders($division_structure)
+    {
+        $division_leaders = Division::findDivisionLeaders($this->game_id);
+        foreach ($division_leaders as $division_leader) {
+            $aod_url = Member::createAODlink([
+                'member_id' => $division_leader->member_id,
+                'rank' => Rank::convert($division_leader->rank_id)->abbr,
+                'forum_name' => $division_leader->forum_name,
+            ]);
+            $division_structure .= (property_exists($division_leader,
+                'position_desc')) ? "{$aod_url} - {$division_leader->position_desc}\r\n" : "{$aod_url}\r\n";
+        }
+        return $division_structure;
     }
 
     /**
@@ -198,27 +218,56 @@ class PS2DivisionStructure
         return array($division_structure, $aod_url);
     }
 
-    private function getReaperGroup()
+    private function getReaperGroup($division_structure)
     {
-        return Platoon::findByName('reaper group');
-    }
+        $platoon = Platoon::findByName('reaper group');
+        $squads = Squad::findAll($this->game_id, $platoon->id);
+        $group_leader = Member::findByMemberId($platoon->leader_id);
 
-    /**
-     * @param $division_structure
-     * @return string
-     */
-    private function getDivisionLeaders($division_structure)
-    {
-        $division_leaders = Division::findDivisionLeaders($this->game_id);
-        foreach ($division_leaders as $division_leader) {
-            $aod_url = Member::createAODlink([
-                'member_id' => $division_leader->member_id,
-                'rank' => Rank::convert($division_leader->rank_id)->abbr,
-                'forum_name' => $division_leader->forum_name,
-            ]);
-            $division_structure .= (property_exists($division_leader,
-                'position_desc')) ? "{$aod_url} - {$division_leader->position_desc}\r\n" : "{$aod_url}\r\n";
+        $reaper_leader = Member::createAODlink(array(
+            'member_id' => $group_leader->member_id,
+            'rank' => Rank::convert($group_leader->rank_id)->abbr,
+            'forum_name' => $group_leader->forum_name,
+        ));
+
+        // fancy image and title
+        $division_structure .= "\r\n\r\n\r\n[center][IMG]http://i.imgur.com/z1DbehX.png[/IMG]\r\n[SIZE=5][B][COLOR=\"#FF0000\"]\r\nR[SIZE=4]EAPERS[/SIZE] S[SIZE=4]PECIAL[/SIZE] O[SIZE=4]PERATIONS[/SIZE] G[SIZE=4]ROUP[/SIZE][/COLOR][/B][/SIZE]\r\n[SIZE=2]C[COLOR=\"#000000\"]-[/COLOR] O[COLOR=\"#000000\"]-[/COLOR] M[COLOR=\"#000000\"]-[/COLOR] P[COLOR=\"#000000\"]-[/COLOR] E[COLOR=\"#000000\"]-[/COLOR] T[COLOR=\"#000000\"]-[/COLOR] I[COLOR=\"#000000\"]-[/COLOR] T[COLOR=\"#000000\"]-[/COLOR] I[COLOR=\"#000000\"]-[/COLOR] V[COLOR=\"#000000\"]-[/COLOR] E[COLOR=\"#000000\"]-[/COLOR] [COLOR=\"#000000\"]---[/COLOR] T[COLOR=\"#000000\"]-[/COLOR] E[COLOR=\"#000000\"]-[/COLOR] A[COLOR=\"#000000\"]-[/COLOR] M[/SIZE]\r\n\r\n\r\n";
+
+        $division_structure .= "[COLOR=\"#FF0000\"][SIZE=5]Group Leader[/SIZE][/COLOR]\r\n";
+        $division_structure .= "[SIZE=4][profile=33860]{$reaper_leader}[/profile][/size]\r\n\r\n";
+
+        foreach ($squads as $squad) {
+            if ($squad->leader_id != 0) {
+                $squad_leader = Member::findById($squad->leader_id);
+                $aod_url = Member::createAODlink([
+                    'member_id' => $squad_leader->member_id,
+                    'forum_name' => Rank::convert($squad_leader->rank_id)->abbr . " " . ucfirst($squad_leader->forum_name),
+                    'color' => $this->squad_leader_color
+                ]);
+                $division_structure .= "[COLOR=\"#FF0000\"][SIZE=4]Squad Leader[/SIZE][/COLOR]\r\n";
+                $division_structure .= "[size=3]{$aod_url}[/size]\r\n\r\n";
+            } else {
+                $division_structure .= "[size=3][color={$this->squad_leader_color}]TBA[/color][/size]\r\n\r\n";
+            }
+
+            // end squad leader
+            // squad members
+            $squadMembers = arrayToObject(Squad::findSquadMembers($squad->id, true, $squad_leader->member_id));
+            if (count((array) $squadMembers)) {
+                $division_structure .= "[COLOR=\"#FF0000\"][SIZE=3]Group Members[/SIZE][/COLOR]\r\n\r\n";
+                foreach ($squadMembers as $squadMember) {
+                    $player_name = Rank::convert($squadMember->rank_id)->abbr . " " . $squadMember->forum_name;
+                    $aod_url = Member::createAODlink(array(
+                        'member_id' => $squadMember->member_id,
+                        'forum_name' => $player_name
+                    ));
+                    $division_structure .= "{$aod_url}\r\n";
+                }
+            }
         }
+
+        $division_structure .= "[/center]";
+
         return $division_structure;
     }
 }
