@@ -223,6 +223,7 @@ class PS2DivisionStructure
         $platoon = Platoon::findByName('reaper group');
         $squads = Squad::findAll($this->game_id, $platoon->id);
         $group_leader = Member::findByMemberId($platoon->leader_id);
+        $this->squad_leader_color = "orange";
 
         $reaper_leader = Member::createAODlink(array(
             'member_id' => $group_leader->member_id,
