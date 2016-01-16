@@ -283,7 +283,7 @@ class PS2DivisionStructure
 
             // header
             $division_structure .= "\r\n[table='align:center,width: {$this->info_width}']";
-            $division_structure .= "[tr][td]\r\n[center][size=3][color={$this->platoon_pos_color}][b]Leaves of Absence[/b][/color][/size][/center][/td][/tr]";
+            $division_structure .= "[tr][td]\r\n[center][size=3][b]Leaves of Absence[/b][/size][/center][/td][/tr]";
             $division_structure .= "[/table]\r\n\r\n";
 
             // players
