@@ -37,27 +37,22 @@ class PS2DivisionStructure
     {
         // header
         $division_structure = "[center]";
+
         // banner
         $division_structure .= "[img]{$this->banner}[/img]\r\n";
 
-        /**
-         * ------division leaders-----
-         */
+        // division leaders
         $division_structure .= "\r\n\r\n[size=5][color={$this->division_leaders_color}][b][i][u]Division Leadership[/u][/i][/b][/color][/size]\r\n";
         $division_structure .= "[size=4]";
         $division_structure = $this->getDivisionLeaders($division_structure);
         $division_structure .= "[/size]\r\n\r\n";
 
-        /**
-         * -----general sergeants-----
-         */
+        // general sergeants
         $division_structure .= "[size=3][color={$this->general_sergeants_color}]General Sergeants[/color]\r\n";
         $division_structure = $this->getGeneralSergeants($division_structure);
         $division_structure .= "[/size][/center]";
 
-        /**
-         * Groups
-         */
+        // groups
         $division_structure .= "[TABLE=\"align: center\"]";
         $division_structure = $this->getGroups($division_structure);
         $division_structure .= "[/table]";
@@ -65,6 +60,10 @@ class PS2DivisionStructure
         // reaper group
         $division_structure = $this->getReaperGroup($division_structure);
 
+        // LOAs
+        $division_structure = $this->getLoas($division_structure);
+
+        // populate content
         $this->content = $division_structure;
     }
 
@@ -218,6 +217,7 @@ class PS2DivisionStructure
         return array($division_structure, $aod_url);
     }
 
+
     private function getReaperGroup($division_structure)
     {
         $platoon = Platoon::findByName('reaper group');
@@ -269,6 +269,43 @@ class PS2DivisionStructure
 
         $division_structure .= "[/center]";
 
+        return $division_structure;
+    }
+
+    /**
+     * @param $division_structure
+     * @return string
+     */
+    private function getLoas($division_structure)
+    {
+        if (count((array) LeaveOfAbsence::find_all($this->game_id))) {
+            $i = 1;
+
+            // header
+            $division_structure .= "\r\n[table='align:center,width: {$this->info_width}']";
+            $division_structure .= "[tr][td]\r\n[center][size=3][color={$this->platoon_pos_color}][b]Leaves of Absence[/b][/color][/size][/center][/td][/tr]";
+            $division_structure .= "[/table]\r\n\r\n";
+
+            // players
+            $division_structure .= "[table='align:center,width: {$this->info_width}']";
+            $loas = LeaveOfAbsence::find_all($this->game_id);
+
+            foreach ($loas as $player) {
+                $date_end = (strtotime($player->date_end) < strtotime('now')) ? "[COLOR='#FF0000']Expired " . formatTime(strtotime($player->date_end)) . "[/COLOR]" : date("M d, Y",
+                    strtotime($player->date_end));
+                $profile = Member::findByMemberId($player->member_id);
+                $aod_url = Member::createAODlink(array(
+                    'member_id' => $player->member_id,
+                    'forum_name' => "AOD_" . $profile->forum_name
+                ));
+
+                $division_structure .= "[tr][td]{$aod_url}[/td][td]{$date_end}[/td][td]{$player->reason}[/td][/tr]";
+                $i++;
+            }
+
+            $division_structure .= "[/table]";
+            return $division_structure;
+        }
         return $division_structure;
     }
 }
