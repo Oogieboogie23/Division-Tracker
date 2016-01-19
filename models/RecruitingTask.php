@@ -11,10 +11,10 @@ class RecruitingTask extends Application
 
     public static function findAll($game_id)
     {
-        return arrayToObject(Flight::aod()->using('RecruitingTask')
+        return Flight::aod()->using('RecruitingTask')
             ->where(array('game_id @' => array(0, $game_id)))
             ->sortAsc('game_id')
             ->sortAsc('sort_order')
-            ->find());
+            ->find();
     }
 }
