@@ -282,12 +282,12 @@ class PS2DivisionStructure
             $i = 1;
 
             // header
-            $division_structure .= "\r\n[table='align:center,width: {$this->info_width}']";
+            $division_structure .= "\r\n\r\n\r\n[table='align:center,width: 500']";
             $division_structure .= "[tr][td]\r\n[center][size=3][b]Leaves of Absence[/b][/size][/center][/td][/tr]";
             $division_structure .= "[/table]\r\n\r\n";
 
             // players
-            $division_structure .= "[table='align:center,width: {$this->info_width}']";
+            $division_structure .= "[table='align:center,width: 500']";
             $loas = LeaveOfAbsence::find_all($this->game_id);
 
             foreach ($loas as $player) {
