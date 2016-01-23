@@ -115,9 +115,9 @@ class DivisionStructure
                     'forum_name' => $player_name,
                     'color' => $this->platoon_leaders_color
                 ));
-                $division_structure .= "[size=3][color={$this->platoon_pos_color}]Legion Commander[/color]\r\n{$aod_url}[/size]\r\n\r\n";
+                $division_structure .= "[size=3][color={$this->platoon_pos_color}]Platoon Leader[/color]\r\n{$aod_url}[/size]\r\n\r\n";
             } else {
-                $division_structure .= "[size=3][color={$this->platoon_pos_color}]Legion Commander[/color]\r\n[color={$this->platoon_leaders_color}]TBA[/color][/size]\r\n\r\n";
+                $division_structure .= "[size=3][color={$this->platoon_pos_color}]Platoon Leader[/color]\r\n[color={$this->platoon_leaders_color}]TBA[/color][/size]\r\n\r\n";
             }
 
             // Regimental Leaders
@@ -133,7 +133,7 @@ class DivisionStructure
                         'color' => $this->squad_leaders_color
                     ));
 
-                    $division_structure .= "[size=3][color={$this->platoon_pos_color}]Regimental Leader[/color]\r\n{$aod_url}[/size]\r\n\r\n";
+                    $division_structure .= "[size=3][color={$this->platoon_pos_color}]Squad Leader[/color]\r\n{$aod_url}[/size]\r\n\r\n";
                     $division_structure .= "[size=1]";
 
                     // direct recruits
@@ -156,7 +156,7 @@ class DivisionStructure
                         $division_structure .= "[/list]";
                     }
                 } else {
-                    $division_structure .= "[size=3][color={$this->platoon_pos_color}]Regimental Leader[/color]\r\n[color={$this->squad_leaders_color}]TBA[/color][/size]\r\n";
+                    $division_structure .= "[size=3][color={$this->platoon_pos_color}]Squad Leader[/color]\r\n[color={$this->squad_leaders_color}]TBA[/color][/size]\r\n";
                     $division_structure .= "[size=1]";
                 }
 
