@@ -248,6 +248,7 @@ class MemberController
     public static function _doValidateMember()
     {
         $member_id = $_POST['member_id'];
+
         if (Member::exists($member_id)) {
             $data = array('success' => false, 'memberExists' => true);
         } else {

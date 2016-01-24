@@ -193,9 +193,7 @@
 							</div>
 						</div>
 
-
 						<!-- // tab 5 - forum integration actions -->
-
 
 						<div class='tab-pane' id='tab5'>
 

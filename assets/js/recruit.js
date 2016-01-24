@@ -1,9 +1,10 @@
-$(function() {
+$(function () {
 
     // warn before leaving recruiting process before completion
-    $(window).bind('beforeunload', function(e) {
+    $(window).bind('beforeunload', function (e) {
         if ($('#tab6 button.disabled').length < 1) {
-            return "You are in the recruitment process. If you leave, you will lose any data entered.";;
+            return "You are in the recruitment process. If you leave, you will lose any data entered.";
+            ;
         }
     });
 
@@ -17,7 +18,7 @@ $(function() {
     $(".progress-bar-rct").attr("class", "bar progress-bar progress-bar-striped progress-bar-danger active");
 
     $('#rootwizard').bootstrapWizard({
-        onNext: function(tab, navigation, index) {
+        onNext: function (tab, navigation, index) {
 
             /**
              * slide validation
@@ -36,7 +37,7 @@ $(function() {
                 // Validate fields
                 if (!$('#member_id').val() || !$('#ingame').val() || !$('#forumname').val()) {
                     $(".message").html("<i class='fa fa-times'></i>  All fields are required.").effect("bounce");
-                    $('[class$=group]').each(function() {
+                    $('[class$=group]').each(function () {
                         var $this = $(this);
                         if ($this.find('input').val() == '') {
                             $(this).addClass("has-error");
@@ -80,7 +81,7 @@ $(function() {
                     },
                     dataType: 'json',
                     async: false,
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success === false) {
 
                             if (response.memberExists === true) {
@@ -158,7 +159,7 @@ $(function() {
             }
 
         },
-        onTabShow: function(tab, navigation, index) {
+        onTabShow: function (tab, navigation, index) {
 
             // panel titles
             switch (index) {
@@ -193,13 +194,13 @@ $(function() {
     });
 
     // stop enter from submitting
-    $("form").bind("keypress", function(e) {
+    $("form").bind("keypress", function (e) {
         if (e.keyCode == 13) {
             return false;
         }
     });
 
-    $("#storePlayer").click(function(event) {
+    $("#storePlayer").click(function (event) {
 
         event.preventDefault();
         var forum_name = $('#forumname').val(),
@@ -210,7 +211,7 @@ $(function() {
             member_id = $('#member_id').val();
 
         var played_games = [];
-        $.each($("input[name='games']:checked"), function() {
+        $.each($("input[name='games']:checked"), function () {
             played_games.push($(this).val());
         });
 
@@ -234,7 +235,7 @@ function loadThreadCheck() {
         welcomeCode = postString.replace(/%%member_name%%/g, player);
         $("#welcome-pm .welcome-code").html(welcomeCode);
         $('.welcome-pm-btn').attr("data-clipboard-text", welcomeCode);
-        $(".pm-link").click(function(e) {
+        $(".pm-link").click(function (e) {
             e.preventDefault();
             windowOpener($(this).attr("href") + member_id, "AOD Squad Tracking", "width=1000,height=600,scrollbars=yes");
         });
@@ -262,30 +263,30 @@ function loadThreadCheck() {
     $(".thread-results").html('<img src="assets/images/loading.gif " class="margin-top-20" />');
 
     $.ajax({
-        url: "do/check-division-threads",
-        type: 'POST',
-        data: {
-            player: player,
-            game: game
-        },
-        cache: false,
-        beforeSend: function() {
-            $('#content').hide();
-            $('#loading').show();
-        },
-    })
+            url: "do/check-division-threads",
+            type: 'POST',
+            data: {
+                player: player,
+                game: game
+            },
+            cache: false,
+            beforeSend: function () {
+                $('#content').hide();
+                $('#loading').show();
+            },
+        })
 
-    .done(function(html) {
-        $(".thread-results ").empty().prepend(html);
-        $('.tool').powerTip({
-            placement: 'n'
+        .done(function (html) {
+            $(".thread-results ").empty().prepend(html);
+            $('.tool').powerTip({
+                placement: 'n'
+            });
         });
-    });
 }
 
 function storePlayer(member_id, forum_name, platoon, squad_id, ingame_name, division, played_games) {
 
-    var played_games = $("#games option:selected").map(function() {
+    var played_games = $("#games option:selected").map(function () {
         return $(this).val();
     }).get();
 
@@ -305,7 +306,7 @@ function storePlayer(member_id, forum_name, platoon, squad_id, ingame_name, divi
         },
         dataType: 'json',
         async: false,
-        success: function(response) {
+        success: function (response) {
             message = response.message;
             if (response.success === false) {
                 swal('Error!', message, 'error');

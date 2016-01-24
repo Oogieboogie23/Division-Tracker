@@ -13,7 +13,9 @@ class RecruitingTask extends Application
     {
         return Flight::aod()->using('RecruitingTask')
             ->where(array('game_id @' => array(0, $game_id)))
+            // show division specific tasks first
             ->sortDesc('game_id')
+            // sort (need to make this editable in admin)
             ->sortAsc('sort_order')
             ->find();
     }

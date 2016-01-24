@@ -205,13 +205,24 @@ class Member extends Application
 
     public static function getLastRct()
     {
-        $params = (object) Flight::aod()->from(Member::$table)->sortDesc('member_id')->where(array('status_id' => 1))->select('member_id')->one();
+        $params = (object) Flight::aod()
+            ->from(Member::$table)
+            ->sortDesc('member_id')
+            ->where([
+                'status_id' => 1,
+                'member_id <' => 999999,
+            ])
+            ->select('member_id')
+            ->one();
+
         return $params->member_id;
     }
 
     public static function assignToPlatoon($params)
     {
-        $member = self::find(['member_id' => $params['member']]);
+        $member = self::find([
+            'member_id' => $params['member']
+        ]);
         $member->platoon_id = $params['platoon'];
         $member->position_id = 6;
         $member->save();
