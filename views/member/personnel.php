@@ -16,7 +16,7 @@
 							<?php if (Member::isOnLeave($player->member_id)) : ?>
 								<small class='pull-right text-muted'>On Leave</small>
 							<?php else: ?>
-								<small class='pull-right text-<?php echo inactiveClass($player->last_activity); ?>'>Seen <?php echo formatTime(strtotime($player->last_activity)); ?></small>
+								<small class='pull-right text-<?php echo inactiveClass($player->last_activity); ?>'>Seen <?php echo formatTime(strtotime($player->last_activity), 1); ?></small>
 							<?php endif; ?></a>
 						<?php endforeach; ?>		
 
@@ -69,7 +69,7 @@
 										<?php if (Member::isOnLeave($player->member_id)) : ?>
 											<small class='pull-right text-muted'>On Leave</small>
 										<?php else: ?>
-											<small class='pull-right text-<?php echo inactiveClass($player->last_activity); ?>'>Seen <?php echo formatTime(strtotime($player->last_activity)); ?></small>
+											<small class='pull-right text-<?php echo inactiveClass($player->last_activity); ?>'>Seen <?php echo formatTime(strtotime($player->last_activity),1); ?></small>
 										<?php endif; ?></a>
 									<?php endforeach; ?>
 								</div>
