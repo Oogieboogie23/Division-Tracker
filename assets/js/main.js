@@ -233,7 +233,6 @@ $(function () {
     $(".removeMember").click(function (e) {
         e.preventDefault();
 
-
         var $this = $(this);
         var member = $this.closest('li').attr('data-player-id');
 
@@ -261,11 +260,14 @@ $(function () {
                 }
 
                 $.post("do/remove-member", {
-                    id: member
-                });
+                        id: member
+                    })
+                    .done(function (data) {
+                        window.location.reload();
+                    });
 
                 windowOpener($this.attr("href") + member, "AOD Squad Tracking", "width=900,height=600,scrollbars=yes");
-                window.location.reload();
+
             });
     });
 
