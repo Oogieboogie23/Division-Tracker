@@ -18,7 +18,7 @@
                 <p class='list-group-item-text text-muted hidden-xs hidden-sm'><?php echo $division->short_descr ?></p>
                 <h5 class="pull-right text-muted big-num-main count-animated"><?php echo Division::totalCount($division->id)->count; ?></h5>
             </a>
-            <?php if ($i == ceiling(count($divisions) / 2)): ?>
+            <?php if ($i == ceil(count($divisions) / 2)): ?>
         </div>
         <div class='list-group col-md-6'>
             <?php endif; ?>
