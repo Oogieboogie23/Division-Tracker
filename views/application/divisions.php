@@ -1,4 +1,4 @@
-<div class='panel panel-default striped-bg'>
+<div class='panel panel-default trans-striped-bg'>
     <div class='panel-heading'><i class='fa fa-gamepad fa-lg pull-right text-muted'></i> <strong>Gaming
             Divisions</strong> (<?php echo count($divisions); ?>)</div>
     <div class="panel-body">
@@ -18,7 +18,7 @@
                 <p class='list-group-item-text text-muted hidden-xs hidden-sm'><?php echo $division->short_descr ?></p>
                 <h5 class="pull-right text-muted big-num-main count-animated"><?php echo Division::totalCount($division->id)->count; ?></h5>
             </a>
-            <?php if ($i == floor(count($divisions) / 2)): ?>
+            <?php if ($i == ceiling(count($divisions) / 2)): ?>
         </div>
         <div class='list-group col-md-6'>
             <?php endif; ?>
