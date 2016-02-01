@@ -19,7 +19,9 @@ class Division extends Application
 
     public static function find_all()
     {
-        return arrayToObject(Flight::aod()->from(self::$table)->sortAsc('full_name')->select()->many());
+        return Flight::aod()->using('Division')
+            ->sortAsc('full_name')
+            ->find();
     }
 
     //public static function hasUnassignedMembers()
