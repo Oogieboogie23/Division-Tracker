@@ -35,7 +35,16 @@ class WgDivisionStructure
 
     private function getGameLinks($member)
     {
-        $games = MemberGame::getGamesPlayed($member->id);
+        $output = '';
+        $games = MemberGame::getGamesPlayed($member);
+        $handle = MemberHandle::findHandle($member->id, 7);
+
+        foreach ($games as $game) {
+            if (count($handle->num_rows) && in_array($game->short_name, array('ws', 'wt')) ) {
+                $output .= "[url="
+            }
+        }
+
     }
 
     /**
