@@ -131,7 +131,7 @@ if (count($divisions)) {
                 $removalIds = implode($removals, ", ");
 
                 try {
-                    $query = $pdo->prepare("UPDATE member SET status_id = 4 WHERE member_id IN ({$removalIds}) AND game_id = :gid");
+                    $query = $pdo->prepare("UPDATE member SET status_id = 4, squad_id = 0, platoon_id = 0  WHERE member_id IN ({$removalIds}) AND game_id = :gid");
                     $query->execute(array(':gid' => intval($division["id"])));
                 } catch (PDOException $e) {
                     echo "ERROR: " . $e->getMessage();
