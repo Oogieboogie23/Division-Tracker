@@ -16,6 +16,7 @@ class DivisionController
 
             $division_leaders = Division::findDivisionLeaders($division->id);
 
+            Flight::render('division/main/statistics', compact('division'), 'statistics');
             Flight::render('division/main/index', compact('user', 'member', 'division', 'division_leaders'), 'content');
             Flight::render('layouts/application', compact('user', 'member', 'tools', 'divisions', 'js'));
         } else {

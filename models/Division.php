@@ -2,6 +2,9 @@
 
 class Division extends Application
 {
+    public static $table = 'divisions';
+    public static $id_field = 'id';
+    public static $name_field = 'short_name';
     public $id;
     public $description;
     public $short_name;
@@ -12,10 +15,6 @@ class Division extends Application
     public $recruiting_process_thread;
     public $welcome_forum;
     public $primary_handle;
-
-    public static $table = 'divisions';
-    public static $id_field = 'id';
-    public static $name_field = 'short_name';
 
     public static function find_all()
     {
@@ -35,12 +34,12 @@ class Division extends Application
 
     public static function findById($id)
     {
-        return (object)self::find($id);
+        return (object) self::find($id);
     }
 
     public static function findByName($short_name)
     {
-        return (object)self::find($short_name);
+        return (object) self::find($short_name);
     }
 
     public static function findDivisionLeaders($gid)
@@ -90,8 +89,10 @@ class Division extends Application
 
     public static function recruitsThisMonth($game_id)
     {
-        $sql = "SELECT count(*) as count FROM " . Member::$table . " WHERE join_date >= DATE_SUB(CURRENT_DATE, INTERVAL DAYOFMONTH(CURRENT_DATE)-1 DAY) AND game_id = {$game_id}";
-        return arrayToObject(Flight::aod()->sql($sql)->one());
+
+        $query = "SELECT count(*) as recruits FROM user_actions INNER JOIN member ON member.member_id=user_actions.user_id WHERE game_id={$game_id} AND type_id=1 AND date >= DATE_SUB(CURRENT_DATE, INTERVAL DAYOFMONTH(CURRENT_DATE)-1 DAY)";
+        $data = Flight::aod()->sql($query)->one();
+        return $data['recruits'];
     }
 
     public static function recruitingStats($game_id)
@@ -110,7 +111,7 @@ class Division extends Application
     public static function totalCount($game_id)
     {
         $sql = "SELECT count(*) as count FROM " . Member::$table . " WHERE member.game_id = {$game_id} AND status_id IN (1,3,999)";
-        return arrayToObject(Flight::aod()->sql($sql)->one());
+        return Flight::aod()->sql($sql)->one()['count'];
     }
 
     public static function _create()
