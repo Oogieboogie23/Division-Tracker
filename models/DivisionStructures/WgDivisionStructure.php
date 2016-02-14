@@ -26,6 +26,8 @@ class WgDivisionStructure
         // division leaders
         $structure = $this->getDivisionLeaders($structure);
 
+
+
         // close center
         $structure .= "[/center]";
 
@@ -41,7 +43,7 @@ class WgDivisionStructure
 
         foreach ($games as $game) {
             if (count($handle->num_rows) && in_array($game->short_name, array('ws', 'wt')) ) {
-                $output .= "[url="
+                var_dump($game);die;
             }
         }
 
