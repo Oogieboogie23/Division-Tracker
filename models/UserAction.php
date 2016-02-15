@@ -50,9 +50,16 @@ class UserAction extends Application
         if (!$limit) {
             $limit = 10;
         }
+
+        if ($game_id > 100) {
+            $conditions = array();
+        } else {
+            $conditions = array("member.game_id" => $game_id);
+        }
+
         return arrayToObject(Flight::aod()
             ->from(self::$table)
-            ->where(array("member.game_id" => $game_id))
+            ->where($conditions)
             ->limit($limit)
             ->sortDesc('date')
             ->join('actions', array('actions.id' => 'user_actions.type_id'))
