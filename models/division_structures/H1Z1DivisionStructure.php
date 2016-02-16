@@ -6,7 +6,7 @@
  * Generates a bb-code template with prepopulated member data
  *
  */
-class DivisionStructure
+class H1Z1DivisionStructure
 {
     public function __construct($game_id)
     {
