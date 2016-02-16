@@ -28,6 +28,8 @@ class WgDivisionStructure
 
 
 
+
+
         // close center
         $structure .= "[/center]";
 
