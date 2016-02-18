@@ -256,15 +256,12 @@ $(function () {
             function () {
 
                 if (listgroup) {
-                    $this.closest('.list-group-item').remove();
+                    $this.closest('.list-group-item').effect('highlight').fadeOut();
                 }
 
                 $.post("do/remove-member", {
-                        id: member
-                    })
-                    .done(function (data) {
-                        window.location.reload();
-                    });
+                    id: member
+                });
 
                 windowOpener($this.attr("href") + member, "AOD Squad Tracking", "width=900,height=600,scrollbars=yes");
 

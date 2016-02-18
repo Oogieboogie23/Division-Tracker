@@ -320,7 +320,7 @@ $(function() {
                         } else {
                             swal('Error', data.message, 'error');
                             $('.modal').modal('hide');
-                        }
+                    }
                     }
                 });
 
