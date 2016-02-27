@@ -228,6 +228,16 @@
 <?php if (isset($js) && file_exists("assets/js/{$js}.js")) : ?>
     <script src="assets/js/<?php echo $js ?>.js"></script>
 <?php endif; ?>
+<?php if(!empty($extrajs) && is_array($extrajs)){
+  foreach( $extrajs as $js){
+    <?php if (isset($js) && file_exists("assets/js/{$js}.js")) { ?>
+        <script src="assets/js/<?php echo $js ?>.js"></script>
+    <?php }
+
+  }
+
+
+}?>
 
 <?php
 
@@ -243,15 +253,3 @@ if (isset($_SESSION['userid'])) {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

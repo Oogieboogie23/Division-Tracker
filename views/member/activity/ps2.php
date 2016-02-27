@@ -26,13 +26,16 @@
 </div>
 
 </div>
+<div class='panel panel-primary'>
+<div class="panel-heading">Planetside 2 Activity</div>
+<div class="panel-body">
 <div class="row">
 
 <div class="col-sm-12" >
 
 
 <div class="panel panel-default" ng-show="!loading&&profile" >
-<div class="panel-heading"">
+<div class="panel-heading">
 <h4>{{profile.name.first}}</h4>
 </div>
 <div class="panel-body">
@@ -91,7 +94,5 @@
 
 </div></div>
 </div>
-
-	<script type="text/javascript" src="assets/js/libraries/angular.min.js"></script>
-	<script type="text/javascript" src="assets/js/libraries/angular-chart.min.js"></script>
-	<script type="text/javascript" src="assets/js/ps2/controllers.js"></script>
+</div>
+</div>
