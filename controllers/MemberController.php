@@ -40,6 +40,17 @@ class MemberController
                     );
                     $activity_page = $divisionInfo->short_name;
                     break;
+                case "ps2":
+                    if(!empty($aliases["tr_name"])){
+                      $handle = $aliases["tr_name"];
+                    }else{
+                      $handle = $memberInfo->forum_name;
+                    }
+                    $activity = array(
+                        'ps2_character_name'=>$handle;
+                    );
+                    $activity_page = $divisionInfo->short_name;
+                    break;
                 default:
                     $activity = array();
                     $activity_page = 'default';
