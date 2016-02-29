@@ -3,3 +3,5 @@ config.php
 config_bak.php
 .idea
 
+.vagrant
+db

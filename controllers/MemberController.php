@@ -10,7 +10,7 @@ class MemberController
         $member = Member::find(intval($_SESSION['memberid']));
         $tools = Tool::find_all($user->role);
         $divisions = Division::find_all();
-
+        $extrajs = array();
         // profile data
         $memberInfo = Member::findByMemberId(intval($id));
 
@@ -38,6 +38,20 @@ class MemberController
                         'games' => $games,
                         'pctAod' => $pctAod
                     );
+                    $activity_page = $divisionInfo->short_name;
+                    break;
+                case "ps2":
+                    if(!empty($aliases["tr_name"])){
+                      $handle = $aliases["tr_name"];
+                    }else{
+                      $handle = $memberInfo->forum_name;
+                    }
+                    $activity = array(
+                        'ps2_character_name'=>$handle
+                    );
+                    $extrajs[]="libraries/angular.min";
+                    $extrajs[]="libraries/angular-chart.min";
+                    $extrajs[]="ps2/controllers";
                     $activity_page = $divisionInfo->short_name;
                     break;
                 default:
@@ -79,7 +93,8 @@ class MemberController
                 'user' => $user,
                 'member' => $member,
                 'tools' => $tools,
-                'divisions' => $divisions
+                'divisions' => $divisions,
+                'extrajs'=>$extrajs
             ));
 
         } else {
