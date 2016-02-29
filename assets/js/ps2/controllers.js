@@ -1,9 +1,6 @@
 var ps2App = angular.module('ps2App', ['chart.js']);
 ps2App.config(['$locationProvider','ChartJsProvider',function($locationProvider,ChartJsProvider) {
-        $locationProvider.html5Mode({
-  enabled: true,
-  requireBase: false
-});
+        $locationProvider.html5Mode(true);
         ChartJsProvider.setOptions({
             colours: ['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
             responsive:  true,
@@ -27,7 +24,7 @@ ps2App.config(['$locationProvider','ChartJsProvider',function($locationProvider,
 
 									//$scope.profile={};
 							$scope.getprofile=function(name){
-								$http.get("/ps2activity/"+name).success(function(data,status){
+								$http.get("ps2activity/"+name).success(function(data,status){
                   if(!data.error ){
 									$scope.profile=data;
                 }
