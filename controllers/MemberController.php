@@ -47,7 +47,7 @@ class MemberController
                       $handle = $memberInfo->forum_name;
                     }
                     $activity = array(
-                        'ps2_character_name'=>$handle;
+                        'ps2_character_name'=>$handle
                     );
                     $extrajs[]="libraries/angular.min";
                     $extrajs[]="libraries/angular-chart.min";

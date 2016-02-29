@@ -1,7 +1,7 @@
 <div ng-app="ps2App" ng-controller="profileCtrl">
 <input type="hidden" value="<?php echo $ps2_character_name; ?>" id="ps2_character_name">
 <div class="row">
-<div class="col-sm-6 col-sm-offset-3" ng-show="loading">
+<div class="col-sm-8 col-sm-offset-2" ng-show="loading">
 <br/><br/><br/>
 <div class="well">
 <p class="text-center">
@@ -14,19 +14,19 @@
 
 </div>
 <div class="row">
-<div class="col-sm-6 col-sm-offset-3" ng-show="!loading&&!profile">
+<div class="col-sm-8 col-sm-offset-2" ng-show="!loading&&!profile">
 <br/><br/><br/>
 <div class="well">
 <p class="text-center">
 
 <h2>Character Not Found</h2>
-
+<small>Make sure their character name is correct in their "tr name" alias</small>
 </p>
 </div>
 </div>
 
 </div>
-<div class='panel panel-primary'>
+<div class='panel panel-primary' ng-show="!loading&&profile">
 <div class="panel-heading">Planetside 2 Activity</div>
 <div class="panel-body">
 <div class="row">
@@ -34,11 +34,7 @@
 <div class="col-sm-12" >
 
 
-<div class="panel panel-default" ng-show="!loading&&profile" >
-<div class="panel-heading">
-<h4>{{profile.name.first}}</h4>
-</div>
-<div class="panel-body">
+
 <div class="col-sm-4">
 <strong>Last Login:</strong> {{profile.times.last_login_date }}<br/>
 
@@ -93,6 +89,4 @@
 
 
 </div></div>
-</div>
-</div>
 </div>

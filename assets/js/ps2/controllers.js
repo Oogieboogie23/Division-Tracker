@@ -25,10 +25,12 @@ ps2App.config(['$locationProvider','ChartJsProvider',function($locationProvider,
 												tooltipTemplate: "<%= value %>",
 										};
 
-									$scope.profile={};
+									//$scope.profile={};
 							$scope.getprofile=function(name){
 								$http.get("/ps2activity/"+name).success(function(data,status){
+                  if(!data.error ){
 									$scope.profile=data;
+                }
 									$scope.loading=false;
 									console.log($scope.profile);
 								});

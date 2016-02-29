@@ -13,7 +13,9 @@ class PS2StatsController{
           Flight::json($character);
 
         }else{
-          Flight::json("Character Not Found");
+          $error=new stdClass();
+          $error->error="Character Not Found";
+          Flight::json($error);
 
         }
   }
