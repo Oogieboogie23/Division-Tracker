@@ -110,10 +110,17 @@ class DivisionController
 
     public static function _doRemovePartTimeMember($id)
     {
-        if (PartTime::delete($id)) {
-            $data = array('success' => true, 'message' => "Member removed!");
+        $user = User::find(intval($_SESSION['userid']));
+
+        if ($user->role > 0) {
+
+            if (PartTime::delete($id)) {
+                $data = array('success' => true, 'message' => "Member removed!");
+            } else {
+                $data = array('success' => false, 'message' => "Member does not exist!");
+            }
         } else {
-            $data = array('success' => false, 'message' => "Member does not exist!");
+            $data = array('success' => false, 'message' => "You do not have acess to perform this function");
         }
          echo json_encode($data);
     }
