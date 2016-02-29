@@ -27,7 +27,7 @@
                 <div class="collection">
                     <?php if (count($part_time)): ?>
                         <?php foreach ($part_time as $member): ?>
-                            <li class="list-group-item collection-item"><?php echo $member->forum_name ?></li>
+                            <li class="list-group-item collection-item" data-member-id="<?php echo $member->id ?>"><?php echo $member->forum_name ?><span class="pull-right delete-part-time" title="Remove part-time member"><i class="fa fa-trash text-danger"></i></span></li>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <p class="list-group-item text-muted">You have no part time members assigned.</p>

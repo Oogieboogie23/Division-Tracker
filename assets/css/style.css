@@ -775,6 +775,10 @@ div.DTTT_container {
   display: none !important;
 }
 
+.delete-part-time {
+  cursor: pointer;
+}
+
 /**
  * manage section
  */

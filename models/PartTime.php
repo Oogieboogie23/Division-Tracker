@@ -29,8 +29,12 @@ class PartTime extends Application
 
     public static function delete($id)
     {
-        $pt = self::find($id);
-        Flight::aod()->remove($pt);
+        $pt = self::find(array('id' => $id));
+        if (count($pt)) {
+            Flight::aod()->remove($pt);
+        }
+
+        return (bool) Flight::aod()->affected_rows;
     }
 
     public static function modify($params)

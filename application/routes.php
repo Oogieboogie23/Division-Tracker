@@ -44,6 +44,7 @@ if (empty($_SESSION['userid'])) {
     Flight::route('POST /do/validate-member', array('MemberController', '_doValidateMember'));
     Flight::route('POST /do/add-member', array('MemberController', '_doAddMember'));
     Flight::route('POST /do/add-parttime', array('DivisionController', '_doAddPartTimeMember'));
+    Flight::route('/do/part-time/delete/@id', array('DivisionController', '_doRemovePartTimeMember'));
     Flight::route('POST /do/update-flag', array('MemberController', '_doUpdateFlag'));
     Flight::route('POST /do/update-loa', array('DivisionController', '_updateLoa'));
     Flight::route('POST /do/remove-member', array('MemberController', '_doKickFromAod'));
