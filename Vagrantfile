@@ -4,6 +4,7 @@
 image="ubuntu/trusty64"
 dev_dir ="./"
 port = "8080"
+db_file="db/aodwebhost_tracker.sql";
 
 Vagrant.configure("2") do |config|
 
@@ -21,5 +22,10 @@ Vagrant.configure("2") do |config|
     # Shell provisioning
     config.vm.provision "shell" do |s|
     	s.path = "provision/setup_apache.sh"
+    end
+
+
+    if File.exist?(File.join(dev_dir,db_file))
+      config.vm.provision "shell", inline: "mysql -u root -p1234 aod< /var/www/tracker/#{db_file};"
     end
 end

@@ -52,4 +52,8 @@ sudo a2enmod rewrite
 # restart apache
 sudo service apache2 restart
 
+#create db
+sudo mysql -u root -p1234 -e "create database aod";
+
+
 echo "Finished provisioning."
