@@ -775,7 +775,12 @@ div.DTTT_container {
   display: none !important;
 }
 
+li.part-timer:hover .delete-part-time {
+  opacity: 1;
+}
+
 .delete-part-time {
+  opacity: .3;
   cursor: pointer;
 }
 
