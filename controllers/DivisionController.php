@@ -95,7 +95,6 @@ class DivisionController
 
     public static function _doAddPartTimeMember()
     {
-        $user = User::find(intval($_SESSION['userid']));
         $member = Member::find(intval($_SESSION['memberid']));
 
         $member_params = array(
@@ -109,9 +108,21 @@ class DivisionController
         Flight::redirect('/manage/part-time');
     }
 
-    public static function _remove_part_time()
+    public static function _doRemovePartTimeMember($id)
     {
-        echo json_encode($data);
+        $user = User::find(intval($_SESSION['userid']));
+
+        if ($user->role > 0) {
+
+            if (PartTime::delete($id)) {
+                $data = array('success' => true, 'message' => "Member removed!");
+            } else {
+                $data = array('success' => false, 'message' => "Member does not exist!");
+            }
+        } else {
+            $data = array('success' => false, 'message' => "You do not have acess to perform this function");
+        }
+         echo json_encode($data);
     }
 
     public static function _manage_loas()

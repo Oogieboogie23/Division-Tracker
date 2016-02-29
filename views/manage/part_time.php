@@ -15,29 +15,8 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Currently Assigned</div>
-                <?php if (count($part_time)): ?>
-                    <div class="panel-body">
-                        <!--  Form Input -->
-                        <input class="form-control" id="search-collection" type="text" placeholder="Filter list"/>
-                    </div>
-                <?php endif; ?>
-                <div class="collection">
-                    <?php if (count($part_time)): ?>
-                        <?php foreach ($part_time as $member): ?>
-                            <li class="list-group-item collection-item"><?php echo $member->forum_name ?></li>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p class="list-group-item text-muted">You have no part time members assigned.</p>
-                    <?php endif; ?>
-                </div>
-            </div><!-- panel -->
-        </div><!-- col-md-8 -->
 
-
-        <div class="col-md-4">
+        <div class="col-md-3 col-md-push-9">
             <div class="panel panel-primary">
                 <div class="panel-heading">Add member</div>
                 <div class="panel-body">
@@ -62,6 +41,30 @@
                 </div><!-- body -->
             </div><!-- panel -->
         </div><!-- col-md-4 -->
+
+        <div class="col-md-9 col-md-pull-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Currently Assigned</div>
+                <?php if (count($part_time)): ?>
+                    <div class="panel-body">
+                        <!--  Form Input -->
+                        <input class="form-control" id="search-collection" type="text" placeholder="Filter list"/>
+                    </div>
+                <?php endif; ?>
+                <div class="collection">
+                    <?php if (count($part_time)): ?>
+                        <?php foreach ($part_time as $member): ?>
+                            <li class="list-group-item collection-item part-timer"
+                                data-member-id="<?php echo $member->id ?>"><?php echo $member->forum_name ?><span
+                                    class="pull-right delete-part-time" title="Remove part-time member"><i
+                                        class="fa fa-trash text-danger"></i></span></li>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="list-group-item text-muted">You have no part time members assigned.</p>
+                    <?php endif; ?>
+                </div>
+            </div><!-- panel -->
+        </div><!-- col-md-8 -->
 
 
     </div><!-- row -->
