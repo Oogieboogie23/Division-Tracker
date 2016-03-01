@@ -41,10 +41,12 @@ class MemberController
                     $activity_page = $divisionInfo->short_name;
                     break;
                 case "ps2":
-                    if(!empty($aliases["tr_name"])){
-                      $handle = $aliases["tr_name"];
-                    }else{
+                $handle_info = MemberHandle::findHandle($memberInfo->id, 11);
+
+                  if(empty($handle_info->handle_value)){
                       $handle = $memberInfo->forum_name;
+                    }else{
+                      $handle=$handle_info->handle_value;
                     }
                     $activity = array(
                         'ps2_character_name'=>$handle
