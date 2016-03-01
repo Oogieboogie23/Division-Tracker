@@ -22,7 +22,7 @@ ps2App
             $scope.loading = true;
             $scope.chartoptions = {
                 scaleShowVerticalLines: false,
-                tooltipTemplate: "<%= value %>",
+                tooltipTemplate: "<%= value %>"
             };
 
             //$scope.profile={};
@@ -35,7 +35,7 @@ ps2App
                     console.log($scope.profile);
                 });
 
-            }
+            };
 
 
             $scope.getprofile($("#ps2_character_name").val());
