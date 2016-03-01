@@ -7,6 +7,7 @@ class PS2StatsController
     {
         $census = new Census();
         $character = $census->getUserByName($char);
+
         if (!empty($character)) {
             $character->playtime = $census->playtime($character->character_id);
             $character->squadleading = $census->squadleading($character->character_id);
