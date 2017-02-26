@@ -221,7 +221,7 @@
 <script src="assets/js/libraries/ZeroClipboard.js"></script>
 <script src="assets/js/libraries/touchpunch.js"></script>
 <script src="assets/js/libraries/sweetalert2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 <script src="assets/js/main.js"></script>
 

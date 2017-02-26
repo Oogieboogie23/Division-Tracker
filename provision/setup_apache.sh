@@ -50,10 +50,14 @@ echo "${VHOST}" > /etc/apache2/sites-available/000-default.conf
 # enable mod_rewrite
 sudo a2enmod rewrite
 # restart apache
-sudo service apache2 restart
+
 
 #create db
 sudo mysql -u root -p1234 -e "create database aod";
 
+sudo apt-get install phpmyadmin php-mbstring php-gettext
 
+sudo phpenmod mcrypt
+sudo phpenmod mbstring
+sudo service apache2 restart
 echo "Finished provisioning."

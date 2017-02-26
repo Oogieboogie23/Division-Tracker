@@ -7,7 +7,9 @@ class Census
 
     public function getUserByName($character_name)
     {
-        $url = "/character?name.first=" . $character_name . "&c:case=false&c:limit=1000&c:join=type:characters_world^list:0^inject_at:world^terms:world_id=17^outer:0,type:outfit_member_extended^list:0^inject_at:outfit_member^terms:outfit_id=37530159341115681^outer:0,type:faction^inject_at:faction";
+      //  $url = "/character?name.first=" . $character_name . "&c:case=false&c:limit=1000&c:join=type:characters_world^list:0^inject_at:world^terms:world_id=17^outer:0,type:outfit_member_extended^list:0^inject_at:outfit_member^terms:outfit_id=37530159341115681^outer:0,type:faction^inject_at:faction";
+        $url = "/character?name.first=" . $character_name . "&c:case=false&c:limit=1000&c:join=type:characters_world^list:0^inject_at:world^terms:world_id=17^outer:0,type:outfit_member_extended^list:0^inject_at:outfit_member^outer:0,type:faction^inject_at:faction";
+
         $character = $this->query($url);
         if (!empty ($character->character_list [0])) {
             return $character->character_list [0];
@@ -46,36 +48,92 @@ class Census
             $labels = array();
             $data = array();
             $count = 0;
-            $label = date("m-d-Y", $member->last_save);
+            $labels = array();// = date("m-d-Y", $member->last_save);
+            for($i=0;$i<31;$i++){
+              $labels[]=date("m-d-Y", strtotime("- $i days"));
+            }
+              $day_diff=$this->s_datediff("d","now",$member->last_save_date);
+              for($i=0;$i<intval($day_diff);$i++){
+                $data[]=0;
+              }
             // $member->pl_lead=platoonleading($member->character_id);
             foreach (( array ) $member->day as $key => $val) {
-                $labels [] = $label;
+                //$labels [] = $label;
                 $data [] = number_format((($val * 1) / 60) / 60, 2);
                 $count++;
-                $label = date("m-d-Y", strtotime("- $count days", $member->last_save));
+              //  $label = date("m-d-Y", strtotime("- $count days", $member->last_save));
             }
             $member->day->chart = new stdClass ();
             $member->day->chart->labels = $labels;
             $member->day->chart->data = array();
             $member->day->chart->data [] = $data;
+
             $labels = array();
             $data = array();
             $count = 0;
+            // $cur_date= new DateTime("now");
+            // $save_date=new DateTime();
+            //$save_date->setTimestamp(strtotime($member->last_save_date));
+            $date_diff=$this->s_datediff("m","now",$member->last_save_date);
+            $cur_month=intval(date("n"));
+            for($i=$cur_month+1;$i<13;$i++){
+              $labels[]=date('F', mktime(0, 0, 0, $i, 10));
+            }
+            for($i=1;$i<$cur_month+1;$i++){
+              $labels[]=date('F', mktime(0, 0, 0, $i, 10));
+            }
+            $stat_start=intval(date("n",strtotime($member->last_save_date)));
+            $member->date_diff=$date_diff;
+            for($i=0;$i<intval($date_diff);$i++){
+              $data[]=0;
+            }
             foreach (( array ) $member->month as $key => $val) {
 
-                $labels [] = date("F", strtotime("- $count months", $member->last_save));
+              //  $labels [] = date("F", strtotime("- $count months", $member->last_save));
                 $data [] = number_format((($val * 1) / 60) / 60, 2);
                 $count++;
             }
+
             $member->month->chart = new stdClass ();
-            $member->month->chart->labels = $labels;
+            $member->month->chart->labels = array_reverse($labels);
             $member->month->chart->data = array();
             $member->month->chart->data [] = $data;
+
             return $member;
         }
         return null;
     }
 
+    public function s_datediff( $str_interval, $dt_menor, $dt_maior, $relative=false){
+
+           if( is_string( $dt_menor)) $dt_menor = date_create( $dt_menor);
+           if( is_string( $dt_maior)) $dt_maior = date_create( $dt_maior);
+
+           $diff = date_diff( $dt_menor, $dt_maior, ! $relative);
+
+           switch( $str_interval){
+               case "y":
+                   $total = $diff->y + $diff->m / 12 + $diff->d / 365.25; break;
+               case "m":
+                   $total= $diff->y * 12 + $diff->m + $diff->d/30 + $diff->h / 24;
+                   break;
+               case "d":
+                   $total = $diff->y * 365.25 + $diff->m * 30 + $diff->d + $diff->h/24 + $diff->i / 60;
+                   break;
+               case "h":
+                   $total = ($diff->y * 365.25 + $diff->m * 30 + $diff->d) * 24 + $diff->h + $diff->i/60;
+                   break;
+               case "i":
+                   $total = (($diff->y * 365.25 + $diff->m * 30 + $diff->d) * 24 + $diff->h) * 60 + $diff->i + $diff->s/60;
+                   break;
+               case "s":
+                   $total = ((($diff->y * 365.25 + $diff->m * 30 + $diff->d) * 24 + $diff->h) * 60 + $diff->i)*60 + $diff->s;
+                   break;
+              }
+           if( $diff->invert)
+                   return -1 * $total;
+           else    return $total;
+       }
     public function platoonleading($char_id, $days = 30)
     {
         $leading = new stdClass ();

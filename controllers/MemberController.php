@@ -48,8 +48,13 @@ class MemberController
                     }else{
                       $handle=$handle_info->handle_value;
                     }
+                $nc_handle= MemberHandle::findHandle($memberInfo->id, 13);
+                $vs_handle= MemberHandle::findHandle($memberInfo->id, 14);
+
                     $activity = array(
-                        'ps2_character_name'=>$handle
+                        'ps2_character_name'=>$handle,
+                        'ps2_nc_character_names'=>$nc_handle,
+                        'ps2_vs_character_names'=>$vs_handle
                     );
                     $extrajs[]="libraries/angular.min";
                     $extrajs[]="libraries/angular-chart.min";
