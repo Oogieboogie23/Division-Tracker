@@ -47,7 +47,10 @@ class MemberHandle extends Application
 
     public static function findHandle($member_id, $type)
     {
-        $params = self::find(array('member_id' => $member_id, 'handle_type' => $type));
+        $params = Flight::aod()->using('MemberHandle')
+            ->where(array('member_id' => $member_id, 'handle_type' => $type))
+            ->find();
+
         if (is_object($params)) {
             $handle = Handle::findByType($params->handle_type);
             $params->handle_name = $handle->type;

@@ -7,6 +7,7 @@ require_once 'vendor/github/GitHubClient.php';
 // Autoload models and controllers
 Flight::path('models');
 Flight::path('controllers');
+Flight::path('models/division_structures');
 
 // Set views path and environment
 Flight::set('flight.views.path', 'views');

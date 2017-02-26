@@ -12,6 +12,20 @@ $(function () {
         });
     });
 
+    $(".delete-part-time").click(function () {
+        var $this = $(this).closest('li'),
+            id = $this.attr('data-member-id');
+        $.post("do/part-time/delete/" + id, function (data) {
+            data = jQuery.parseJSON(data);
+            if (data.success) {
+                $this.fadeOut();
+                $(".alert-box").html("<div class='alert alert-success'><i class='fa fa-check'></i> " + data.message + "</div>").show().delay(1000).fadeOut();
+            } else {
+                $(".alert-box").html("<div class='alert alert-danger'><i class='fa fa-times'></i> " + data.message + "</div>").effect('highlight').delay(3000).fadeOut();
+            }
+        });
+    });
+
     $(".send-pm").click(function (e) {
         e.preventDefault();
         var members = $(this).attr('data-members'),
@@ -233,7 +247,6 @@ $(function () {
     $(".removeMember").click(function (e) {
         e.preventDefault();
 
-
         var $this = $(this);
         var member = $this.closest('li').attr('data-player-id');
 
@@ -257,7 +270,7 @@ $(function () {
             function () {
 
                 if (listgroup) {
-                    $this.closest('.list-group-item').remove();
+                    $this.closest('.list-group-item').effect('highlight').fadeOut();
                 }
 
                 $.post("do/remove-member", {
@@ -265,7 +278,7 @@ $(function () {
                 });
 
                 windowOpener($this.attr("href") + member, "AOD Squad Tracking", "width=900,height=600,scrollbars=yes");
-                window.location.reload();
+
             });
     });
 

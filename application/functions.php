@@ -131,40 +131,41 @@ function objectToArray($d)
 /**
  * returns human readable time in past (2 seconds ago, 12 hours ago etc)
  * @param  int $ptime date
- * @return string        
+ * @return string
  */
-function formatTime($ptime)
-{
-    $etime = time() - $ptime;
-    
-    if ($etime < 1) {
-        return '0 seconds';
-    }
-    
-    $a        = array(
-        365 * 24 * 60 * 60 => 'year',
-        30 * 24 * 60 * 60 => 'month',
-        24 * 60 * 60 => 'day',
-        60 * 60 => 'hour',
+function formatTime($distant_timestamp, $max_units = 2) {
+    $i = 0;
+    $time = time() - $distant_timestamp; // to get the time since that moment
+    $tokens = [
+        31536000 => 'year',
+        2592000 => 'month',
+        604800 => 'week',
+        86400 => 'day',
+        3600 => 'hour',
         60 => 'minute',
         1 => 'second'
-        );
-    $a_plural = array(
-        'year' => 'years',
-        'month' => 'months',
-        'day' => 'days',
-        'hour' => 'hours',
-        'minute' => 'minutes',
-        'second' => 'seconds'
-        );
-    
-    foreach ($a as $secs => $str) {
-        $d = $etime / $secs;
-        if ($d >= 1) {
-            $r = round($d);
-            return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str) . ' ago';
+    ];
+
+    $responses = [];
+    while ($i < $max_units) {
+        foreach ($tokens as $unit => $text) {
+            if ($time < $unit) {
+                continue;
+            }
+            $i++;
+            $numberOfUnits = floor($time / $unit);
+
+            $responses[] = $numberOfUnits . ' ' . $text . (($numberOfUnits > 1) ? 's' : '');
+            $time -= ($unit * $numberOfUnits);
+            break;
         }
     }
+
+    if (!empty($responses)) {
+        return implode(', ', $responses) . ' ago';
+    }
+
+    return 'Just now';
 }
 
 function lastSeenFlag($last_seen)

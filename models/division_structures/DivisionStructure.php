@@ -45,9 +45,6 @@ class DivisionStructure
         $division_structure = "[table='align:center,width: {$this->info_width}']";
         $division_structure .= "[tr][td]";
 
-        // banner
-        $division_structure .= "[center][img]http://puu.sh/kGjU9/4f331d1a99.jpg[/img][/center]\r\n";
-
         /**
          * ------division leaders-----
          */

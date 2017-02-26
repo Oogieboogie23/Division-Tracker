@@ -13,9 +13,8 @@ class DivisionController
         $js = 'division';
 
         if (property_exists($division, 'id')) {
-
             $division_leaders = Division::findDivisionLeaders($division->id);
-
+            Flight::render('division/main/statistics', compact('division'), 'statistics');
             Flight::render('division/main/index', compact('user', 'member', 'division', 'division_leaders'), 'content');
             Flight::render('layouts/application', compact('user', 'member', 'tools', 'divisions', 'js'));
         } else {
@@ -96,7 +95,6 @@ class DivisionController
 
     public static function _doAddPartTimeMember()
     {
-        $user = User::find(intval($_SESSION['userid']));
         $member = Member::find(intval($_SESSION['memberid']));
 
         $member_params = array(
@@ -110,9 +108,21 @@ class DivisionController
         Flight::redirect('/manage/part-time');
     }
 
-    public static function _remove_part_time()
+    public static function _doRemovePartTimeMember($id)
     {
-        echo json_encode($data);
+        $user = User::find(intval($_SESSION['userid']));
+
+        if ($user->role > 0) {
+
+            if (PartTime::delete($id)) {
+                $data = array('success' => true, 'message' => "Member removed!");
+            } else {
+                $data = array('success' => false, 'message' => "Member does not exist!");
+            }
+        } else {
+            $data = array('success' => false, 'message' => "You do not have acess to perform this function");
+        }
+         echo json_encode($data);
     }
 
     public static function _manage_loas()
@@ -137,11 +147,6 @@ class DivisionController
 
     public static function _reports()
     {
-        $user = User::find(intval($_SESSION['userid']));
-        $member = Member::find(intval($_SESSION['memberid']));
-        $tools = Tool::find_all($user->role);
-        $divisions = Division::find_all();
-        $division = Division::findByName(strtolower($div));
         Flight::render('modals/reports');
     }
 
@@ -160,6 +165,9 @@ class DivisionController
                 break;
             case 6:
                 $division_structure = new PS2DivisionStructure($member->game_id);
+                break;
+            case 7:
+                $division_structure = new H1Z1DivisionStructure($member->game_id);
                 break;
             default:
                 $division_structure = new DivisionStructure($member->game_id);

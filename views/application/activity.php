@@ -28,7 +28,7 @@
                                     <?php echo UserAction::humanize($action->type_id, $action->target_id,
                                         $action->user_id,
                                         $action->verbage); ?>
-                                    <span><?php echo formatTime(strtotime($action->date)); ?></span>
+                                    <span><?php echo formatTime(strtotime($action->date), 1); ?></span>
                                 </div>
                             </li>
                         <?php endif; ?>

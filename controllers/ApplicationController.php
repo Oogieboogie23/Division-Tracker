@@ -26,7 +26,6 @@ class ApplicationController
 
     public static function _activity($findBy=false)
     {
-        var_dump($findBy);
         $user = User::find(intval($_SESSION['userid']));
         $member = Member::find(intval($_SESSION['memberid']));
         $tools = Tool::find_all($user->role);
